@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../constants/app_colors.dart';
-import '../../constants/app_text_styles.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_text_styles.dart';
 
-class AppTextFormField extends StatefulWidget {
+/// Modern ve temiz tasarımlı text form field widget'ı
+class AppTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? labelText;
   final String? hintText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final TextInputType? keyboardType;
   final bool obscureText;
+  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final void Function()? onTap;
   final bool readOnly;
   final int? maxLines;
   final int? maxLength;
-  final TextCapitalization textCapitalization;
-  final bool enabled;
+  final TextInputAction? textInputAction;
+  final void Function(String)? onFieldSubmitted;
+  final FocusNode? focusNode;
+  final bool autofocus;
+  final String? initialValue;
 
   const AppTextFormField({
     super.key,
@@ -27,140 +31,101 @@ class AppTextFormField extends StatefulWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
-    this.keyboardType,
     this.obscureText = false,
+    this.keyboardType,
     this.validator,
     this.onChanged,
     this.onTap,
     this.readOnly = false,
     this.maxLines = 1,
     this.maxLength,
-    this.textCapitalization = TextCapitalization.none,
-    this.enabled = true,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.focusNode,
+    this.autofocus = false,
+    this.initialValue,
   });
-
-  @override
-  State<AppTextFormField> createState() => _AppTextFormFieldState();
-}
-
-class _AppTextFormFieldState extends State<AppTextFormField> {
-  bool _isFocused = false;
-  late FocusNode _focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-    _focusNode.addListener(_onFocusChange);
-  }
-
-  @override
-  void dispose() {
-    _focusNode.removeListener(_onFocusChange);
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  void _onFocusChange() {
-    setState(() {
-      _isFocused = _focusNode.hasFocus;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.labelText != null) ...[
+        if (labelText != null) ...[
           Text(
-            widget.labelText!,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: _isFocused ? AppColors.primary : AppColors.textSecondary,
+            labelText!,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(height: 8.h),
         ],
         TextFormField(
-          controller: widget.controller,
-          focusNode: _focusNode,
-          keyboardType: widget.keyboardType,
-          obscureText: widget.obscureText,
-          validator: widget.validator,
-          onChanged: widget.onChanged,
-          onTap: widget.onTap,
-          readOnly: widget.readOnly,
-          maxLines: widget.maxLines,
-          maxLength: widget.maxLength,
-          textCapitalization: widget.textCapitalization,
-          enabled: widget.enabled,
+          controller: controller,
+          initialValue: initialValue,
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          validator: validator,
+          onChanged: onChanged,
+          onTap: onTap,
+          readOnly: readOnly,
+          maxLines: maxLines,
+          maxLength: maxLength,
+          textInputAction: textInputAction,
+          onFieldSubmitted: onFieldSubmitted,
+          focusNode: focusNode,
+          autofocus: autofocus,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textPrimary,
+            color: AppColors.white,
           ),
           decoration: InputDecoration(
-            hintText: widget.hintText,
+            hintText: hintText,
             hintStyle: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textTertiary,
+              color: AppColors.textSecondary,
             ),
-            prefixIcon: widget.prefixIcon != null
-                ? Padding(
-                    padding: EdgeInsets.all(12.w),
-                    child: widget.prefixIcon,
-                  )
-                : null,
-            suffixIcon: widget.suffixIcon != null
-                ? Padding(
-                    padding: EdgeInsets.all(12.w),
-                    child: widget.suffixIcon,
-                  )
-                : null,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             filled: true,
             fillColor: AppColors.surface,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(
                 color: AppColors.border,
-                width: 1.w,
+                width: 1,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(
                 color: AppColors.border,
-                width: 1.w,
+                width: 1,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: AppColors.borderFocused,
-                width: 2.w,
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+                width: 2,
               ),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: AppColors.borderError,
-                width: 1.w,
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(
+                color: AppColors.error,
+                width: 1,
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: AppColors.borderError,
-                width: 2.w,
-              ),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: AppColors.border,
-                width: 1.w,
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: const BorderSide(
+                color: AppColors.error,
+                width: 2,
               ),
             ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 16.w,
-              vertical: 12.h,
+              vertical: 16.h,
             ),
             counterText: '',
           ),

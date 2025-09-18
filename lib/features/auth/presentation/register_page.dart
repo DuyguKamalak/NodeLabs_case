@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text_form_field/app_text_form_field.dart';
+import '../../../core/widgets/common/app_background.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,12 +15,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-    with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -32,39 +27,7 @@ class _RegisterPageState extends State<RegisterPage>
   bool _acceptTerms = false;
 
   @override
-  void initState() {
-    super.initState();
-    _setupAnimations();
-  }
-
-  void _setupAnimations() {
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-    ));
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.2, 0.8, curve: Curves.easeOut),
-    ));
-
-    _animationController.forward();
-  }
-
-  @override
   void dispose() {
-    _animationController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
@@ -74,17 +37,7 @@ class _RegisterPageState extends State<RegisterPage>
   }
 
   void _handleRegister() {
-    if (_formKey.currentState!.validate()) {
-      if (!_acceptTerms) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Lütfen kullanım şartlarını kabul edin'),
-            backgroundColor: AppColors.error,
-          ),
-        );
-        return;
-      }
-
+    if (_formKey.currentState!.validate() && _acceptTerms) {
       // Register logic implemented
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -99,387 +52,379 @@ class _RegisterPageState extends State<RegisterPage>
           Navigator.of(context).pushReplacementNamed('/main');
         }
       });
+    } else if (!_acceptTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Lütfen kullanıcı sözleşmesini kabul edin'),
+          backgroundColor: AppColors.error,
+        ),
+      );
     }
+  }
+
+  void _navigateToLogin() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 24.w,
-            color: AppColors.textPrimary,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          AppStrings.createAccount,
-          style: AppTextStyles.h3,
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(24.w),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 20.h),
+      backgroundColor: Colors.transparent,
+      body: AppBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(24.w),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 20.h),
 
-                // Lottie Animation
-                FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: SizedBox(
-                    height: 150.h,
-                    child: Lottie.asset(
-                      'assets/animations/register_animation.json',
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        // Fallback if animation file doesn't exist
-                        return Container(
-                          height: 150.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.surface,
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              'assets/images/icon.svg',
-                              width: 60.w,
-                              height: 60.h,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 32.h),
-
-                // Name Fields
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: AppTextFormField(
-                          controller: _firstNameController,
-                          labelText: AppStrings.firstName,
-                          prefixIcon: Icon(
-                            Icons.person_outline,
-                            size: 20.w,
-                            color: AppColors.textSecondary,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppStrings.fieldRequired;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 16.w),
-                      Expanded(
-                        child: AppTextFormField(
-                          controller: _lastNameController,
-                          labelText: AppStrings.lastName,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return AppStrings.fieldRequired;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 16.h),
-
-                // Email Field
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: AppTextFormField(
-                    controller: _emailController,
-                    labelText: AppStrings.email,
-                    prefixIcon: Icon(
-                      Icons.email_outlined,
-                      size: 20.w,
-                      color: AppColors.textSecondary,
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings.fieldRequired;
-                      }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value)) {
-                        return AppStrings.invalidEmail;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                SizedBox(height: 16.h),
-
-                // Password Field
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: AppTextFormField(
-                    controller: _passwordController,
-                    labelText: AppStrings.password,
-                    prefixIcon: Icon(
-                      Icons.lock_outline,
-                      size: 20.w,
-                      color: AppColors.textSecondary,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        size: 20.w,
-                        color: AppColors.textSecondary,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    obscureText: !_isPasswordVisible,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings.fieldRequired;
-                      }
-                      if (value.length < 6) {
-                        return AppStrings.passwordTooShort;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                SizedBox(height: 16.h),
-
-                // Confirm Password Field
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: AppTextFormField(
-                    controller: _confirmPasswordController,
-                    labelText: AppStrings.confirmPassword,
-                    prefixIcon: Icon(
-                      Icons.lock_outline,
-                      size: 20.w,
-                      color: AppColors.textSecondary,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: SvgPicture.asset(
-                        _isConfirmPasswordVisible
-                            ? 'assets/icons/Components/See.svg'
-                            : 'assets/icons/Components/Hide.svg',
-                        width: 20.w,
-                        height: 20.h,
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.textSecondary,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isConfirmPasswordVisible =
-                              !_isConfirmPasswordVisible;
-                        });
-                      },
-                    ),
-                    obscureText: !_isConfirmPasswordVisible,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppStrings.fieldRequired;
-                      }
-                      if (value != _passwordController.text) {
-                        return AppStrings.passwordsNotMatch;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-
-                SizedBox(height: 16.h),
-
-                // Terms and Conditions
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: _acceptTerms,
-                        onChanged: (value) {
-                          setState(() {
-                            _acceptTerms = value ?? false;
-                          });
-                        },
-                        activeColor: AppColors.primary,
-                        checkColor: AppColors.white,
-                      ),
-                      Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
+                  // Ana Container (354px genişlik, esnek yükseklik)
+                  SizedBox(
+                    width: 354.w,
+                    child: Column(
+                      children: [
+                        // Logo ve Text Container (256x160, gap: 24px)
+                        SizedBox(
+                          width: 256.w,
+                          height: 160.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const TextSpan(text: 'Kullanım şartlarını ve '),
-                              TextSpan(
-                                text: 'gizlilik politikasını',
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.primary,
-                                  decoration: TextDecoration.underline,
-                                ),
+                              // Logo (78x78)
+                              SvgPicture.asset(
+                                'assets/images/icon.svg',
+                                width: 78.w,
+                                height: 78.h,
                               ),
-                              const TextSpan(text: ' kabul ediyorum'),
+
+                              SizedBox(height: 24.h), // Gap: 24px
+
+                              // "Hesap Oluştur" Text
+                              Text(
+                                'Hesap Oluştur',
+                                style: AppTextStyles.h4
+                                    .copyWith(color: AppColors.white),
+                                textAlign: TextAlign.center,
+                              ),
+
+                              SizedBox(height: 8.h),
+
+                              // "Kullanıcı bilgilerinle kaydol" Text
+                              Text(
+                                'Kullanıcı bilgilerinle kaydol',
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  color: AppColors.white
+                                      .withOpacity(0.9), // 90% opacity
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                SizedBox(height: 32.h),
+                        SizedBox(height: 24.h), // Gap: 24px
 
-                // Register Button
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: AppButton(
-                    text: AppStrings.register,
-                    onPressed: _handleRegister,
-                    type: AppButtonType.primary,
-                  ),
-                ),
-
-                SizedBox(height: 24.h),
-
-                // Divider
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 1.h,
-                          color: AppColors.border,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: Text(
-                          'veya',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 1.h,
-                          color: AppColors.border,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 24.h),
-
-                // Social Register Buttons
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: AppButton(
-                          text: 'Google',
-                          onPressed: () {
-                            // Google register functionality
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Google kaydı yakında!'),
-                                backgroundColor: AppColors.info,
+                        // Input Container (354px genişlik, esnek yükseklik)
+                        SizedBox(
+                          width: 354.w,
+                          child: Column(
+                            children: [
+                              // Ad Soyad Field
+                              SizedBox(
+                                width: 354.w,
+                                child: AppTextFormField(
+                                  controller: _firstNameController,
+                                  labelText: 'Ad Soyad',
+                                  hintText: 'Ad ve soyadınızı girin',
+                                  prefixIcon: Icon(
+                                    Icons.person_outline,
+                                    size: 20.w,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Ad soyad gerekli';
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            );
-                          },
-                          type: AppButtonType.secondary,
-                          icon: Icon(
-                            Icons.g_mobiledata,
-                            size: 20.w,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16.w),
-                      Expanded(
-                        child: AppButton(
-                          text: 'Apple',
-                          onPressed: () {
-                            // Apple register functionality
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Apple kaydı yakında!'),
-                                backgroundColor: AppColors.info,
+
+                              SizedBox(height: 24.h), // Gap: 24px
+
+                              // Email Field
+                              SizedBox(
+                                width: 354.w,
+                                child: AppTextFormField(
+                                  controller: _emailController,
+                                  labelText: 'E-Posta',
+                                  hintText: 'E-posta adresinizi girin',
+                                  prefixIcon: Icon(
+                                    Icons.email_outlined,
+                                    size: 20.w,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'E-posta adresi gerekli';
+                                    }
+                                    if (!value.contains('@')) {
+                                      return 'Geçerli bir e-posta adresi girin';
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                            );
-                          },
-                          type: AppButtonType.secondary,
-                          icon: Icon(
-                            Icons.apple,
-                            size: 20.w,
-                            color: AppColors.textPrimary,
+
+                              SizedBox(height: 24.h), // Gap: 24px
+
+                              // Password Field
+                              SizedBox(
+                                width: 354.w,
+                                child: AppTextFormField(
+                                  controller: _passwordController,
+                                  labelText: 'Şifre',
+                                  hintText: 'Şifrenizi girin',
+                                  prefixIcon: Icon(
+                                    Icons.lock_outline,
+                                    size: 20.w,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _isPasswordVisible
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      size: 20.w,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isPasswordVisible =
+                                            !_isPasswordVisible;
+                                      });
+                                    },
+                                  ),
+                                  obscureText: !_isPasswordVisible,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Şifre gerekli';
+                                    }
+                                    if (value.length < 6) {
+                                      return 'Şifre en az 6 karakter olmalı';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              SizedBox(height: 24.h), // Gap: 24px
+
+                              // Confirm Password Field
+                              SizedBox(
+                                width: 354.w,
+                                child: AppTextFormField(
+                                  controller: _confirmPasswordController,
+                                  labelText: 'Şifre Tekrar',
+                                  hintText: 'Şifrenizi tekrar girin',
+                                  prefixIcon: Icon(
+                                    Icons.lock_outline,
+                                    size: 20.w,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _isConfirmPasswordVisible
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      size: 20.w,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isConfirmPasswordVisible =
+                                            !_isConfirmPasswordVisible;
+                                      });
+                                    },
+                                  ),
+                                  obscureText: !_isConfirmPasswordVisible,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Şifre tekrarı gerekli';
+                                    }
+                                    if (value != _passwordController.text) {
+                                      return 'Şifreler eşleşmiyor';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              SizedBox(height: 24.h), // Gap: 24px
+
+                              // Terms and Conditions Checkbox
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: _acceptTerms,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _acceptTerms = value ?? false;
+                                      });
+                                    },
+                                    activeColor: AppColors.primary,
+                                    checkColor: AppColors.white,
+                                  ),
+                                  Expanded(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          color: AppColors.white60,
+                                        ),
+                                        children: [
+                                          const TextSpan(
+                                              text: 'Kullanıcı sözleşmesini '),
+                                          TextSpan(
+                                            text: 'Okudum ve Kabul ediyorum',
+                                            style: AppTextStyles.bodySmallBold
+                                                .copyWith(
+                                              color: AppColors.white,
+                                            ),
+                                          ),
+                                          const TextSpan(
+                                              text:
+                                                  '. Bu sözleşmeyi okuyarak devam ediniz lütfen.'),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                SizedBox(height: 32.h),
+                        SizedBox(height: 24.h), // Gap: 24px
 
-                // Login Link
-                SlideTransition(
-                  position: _slideAnimation,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppStrings.alreadyHaveAccount,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
+                        // Register Button
+                        AppButton(
+                          text: 'Kaydol',
+                          onPressed: _handleRegister,
+                          type: AppButtonType.primary,
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text(
-                          AppStrings.login,
-                          style: AppTextStyles.link,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                SizedBox(height: 40.h),
-              ],
+                        SizedBox(height: 24.h), // Gap: 24px
+
+                        // Social Login Buttons Container (210px genişlik, esnek yükseklik)
+                        SizedBox(
+                          width: 210.w,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildSocialButton(
+                                icon: Icons.g_mobiledata,
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Google kaydı yakında!'),
+                                      backgroundColor: AppColors.info,
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(width: 15.w), // Gap: 15px
+                              _buildSocialButton(
+                                icon: Icons.apple,
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Apple kaydı yakında!'),
+                                      backgroundColor: AppColors.info,
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(width: 15.w), // Gap: 15px
+                              _buildSocialButton(
+                                icon: Icons.facebook,
+                                onTap: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Facebook kaydı yakında!'),
+                                      backgroundColor: AppColors.info,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: 24.h), // Gap: 24px
+
+                        // Login Link
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Hesabın var mı?',
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.white60,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: _navigateToLogin,
+                              child: Text(
+                                'Giriş Yap',
+                                style: AppTextStyles.link.copyWith(
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 40.h), // Alt boşluk
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSocialButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 60.w,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(
+            color: AppColors.border,
+            width: 1,
+          ),
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            size: 24.w,
+            color: AppColors.white,
           ),
         ),
       ),

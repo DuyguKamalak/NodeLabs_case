@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/common/app_background.dart';
 import '../../movies/data/models/movie_model.dart';
 import '../../movies/presentation/widgets/movie_card.dart';
 
@@ -149,125 +150,128 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // App Bar
-            Padding(
-              padding: EdgeInsets.all(20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.appName,
-                        style: AppTextStyles.h2.copyWith(
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      Text(
-                        AppStrings.appTagline,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          // Search functionality
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Arama özelliği yakında!'),
-                              backgroundColor: AppColors.info,
-                            ),
-                          );
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/icons/Components/User.svg',
-                          width: 24.w,
-                          height: 24.h,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.textPrimary,
-                            BlendMode.srcIn,
+      backgroundColor: Colors.transparent,
+      body: AppBackground(
+        child: SafeArea(
+          child: Column(
+            children: [
+              // App Bar
+              Padding(
+                padding: EdgeInsets.all(20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppStrings.appName,
+                          style: AppTextStyles.h2.copyWith(
+                            color: AppColors.primary,
                           ),
                         ),
-                      ),
-                      SizedBox(width: 8.w),
-                      IconButton(
-                        onPressed: () {
-                          // Profile functionality
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Profil sayfasına gidiliyor...'),
-                              backgroundColor: AppColors.info,
-                            ),
-                          );
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/icons/Components/User.svg',
-                          width: 24.w,
-                          height: 24.h,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.textPrimary,
-                            BlendMode.srcIn,
+                        Text(
+                          AppStrings.appTagline,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: AppColors.textSecondary,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            // Search functionality
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Arama özelliği yakında!'),
+                                backgroundColor: AppColors.info,
+                              ),
+                            );
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/icons/Components/User.svg',
+                            width: 24.w,
+                            height: 24.h,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.textPrimary,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        IconButton(
+                          onPressed: () {
+                            // Profile functionality
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Profil sayfasına gidiliyor...'),
+                                backgroundColor: AppColors.info,
+                              ),
+                            );
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/icons/Components/User.svg',
+                            width: 24.w,
+                            height: 24.h,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.textPrimary,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            // Tab Bar
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: TabBar(
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  color: AppColors.primary,
+              // Tab Bar
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                labelColor: AppColors.white,
-                unselectedLabelColor: AppColors.textSecondary,
-                labelStyle: AppTextStyles.labelMedium.copyWith(
-                  fontWeight: FontWeight.w600,
+                child: TabBar(
+                  controller: _tabController,
+                  indicator: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  labelColor: AppColors.white,
+                  unselectedLabelColor: AppColors.textSecondary,
+                  labelStyle: AppTextStyles.labelMedium.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  unselectedLabelStyle: AppTextStyles.labelMedium,
+                  tabs: const [
+                    Tab(text: 'Popüler'),
+                    Tab(text: 'En İyi'),
+                    Tab(text: 'Şimdi'),
+                    Tab(text: 'Yakında'),
+                  ],
                 ),
-                unselectedLabelStyle: AppTextStyles.labelMedium,
-                tabs: const [
-                  Tab(text: 'Popüler'),
-                  Tab(text: 'En İyi'),
-                  Tab(text: 'Şimdi'),
-                  Tab(text: 'Yakında'),
-                ],
               ),
-            ),
 
-            SizedBox(height: 24.h),
+              SizedBox(height: 24.h),
 
-            // Content
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildTabContent(_popularMovies),
-                  _buildTabContent(_topRatedMovies),
-                  _buildTabContent(_nowPlayingMovies),
-                  _buildTabContent(_popularMovies), // Placeholder for upcoming
-                ],
+              // Content
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    _buildTabContent(_popularMovies),
+                    _buildTabContent(_topRatedMovies),
+                    _buildTabContent(_nowPlayingMovies),
+                    _buildTabContent(
+                        _popularMovies), // Placeholder for upcoming
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

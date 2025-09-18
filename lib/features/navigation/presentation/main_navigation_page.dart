@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/common/app_background.dart';
 import '../presentation/bottom_nav_bar.dart';
 import '../../home/presentation/home_page.dart';
 import '../../profile/presentation/profile_page.dart';
@@ -41,18 +41,20 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = NavItem.values[index];
-          });
-        },
-        children: const [
-          HomePage(),
-          ProfilePage(),
-        ],
+      backgroundColor: Colors.transparent,
+      body: AppBackground(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = NavItem.values[index];
+            });
+          },
+          children: const [
+            HomePage(),
+            ProfilePage(),
+          ],
+        ),
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,

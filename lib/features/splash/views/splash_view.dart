@@ -174,7 +174,7 @@ class _SplashViewState extends State<SplashView>
                   // App Name
                   Text(
                     AppStrings.appName,
-                    style: AppTextStyles.appTitle,
+                    style: AppTextStyles.h1,
                   ),
 
                   const SizedBox(height: 8),

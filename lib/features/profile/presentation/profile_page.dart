@@ -6,6 +6,7 @@ import 'dart:io';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/widgets/common/app_background.dart';
 import '../../movies/data/models/movie_model.dart';
 import '../../movies/presentation/widgets/movie_card.dart';
 
@@ -130,233 +131,236 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Profile Header
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: Center(
-                  child: Column(
-                    children: [
-                      // Profile Image
-                      GestureDetector(
-                        onTap: _pickImage,
-                        child: Container(
-                          width: 120.w,
-                          height: 120.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.primary,
-                              width: 3.w,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withOpacity(0.3),
-                                blurRadius: 20.r,
-                                offset: Offset(0, 8.h),
+      backgroundColor: Colors.transparent,
+      body: AppBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Header
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        // Profile Image
+                        GestureDetector(
+                          onTap: _pickImage,
+                          child: Container(
+                            width: 120.w,
+                            height: 120.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.primary,
+                                width: 3.w,
                               ),
-                            ],
-                          ),
-                          child: ClipOval(
-                            child: _profileImage != null
-                                ? Image.file(
-                                    _profileImage!,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Container(
-                                    color: AppColors.surface,
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        'assets/icons/Components/User.svg',
-                                        width: 40.w,
-                                        height: 40.h,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.textSecondary,
-                                          BlendMode.srcIn,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withOpacity(0.3),
+                                  blurRadius: 20.r,
+                                  offset: Offset(0, 8.h),
+                                ),
+                              ],
+                            ),
+                            child: ClipOval(
+                              child: _profileImage != null
+                                  ? Image.file(
+                                      _profileImage!,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Container(
+                                      color: AppColors.surface,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/icons/Components/User.svg',
+                                          width: 40.w,
+                                          height: 40.h,
+                                          colorFilter: const ColorFilter.mode(
+                                            AppColors.textSecondary,
+                                            BlendMode.srcIn,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                            ),
                           ),
                         ),
-                      ),
 
-                      SizedBox(height: 16.h),
+                        SizedBox(height: 16.h),
 
-                      // Upload Button
-                      TextButton.icon(
-                        onPressed: _pickImage,
-                        icon: SvgPicture.asset(
-                          'assets/icons/Type=Upload.svg',
-                          width: 16.w,
-                          height: 16.h,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.primary,
-                            BlendMode.srcIn,
+                        // Upload Button
+                        TextButton.icon(
+                          onPressed: _pickImage,
+                          icon: SvgPicture.asset(
+                            'assets/icons/Type=Upload.svg',
+                            width: 16.w,
+                            height: 16.h,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.primary,
+                              BlendMode.srcIn,
+                            ),
                           ),
-                        ),
-                        label: Text(
-                          _profileImage != null
-                              ? AppStrings.changePhoto
-                              : AppStrings.uploadPhoto,
-                          style: AppTextStyles.link,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 32.h),
-
-              // User Info
-              SlideTransition(
-                position: _slideAnimation,
-                child: Container(
-                  padding: EdgeInsets.all(20.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(
-                      color: AppColors.border,
-                      width: 1.w,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Profil Bilgileri',
-                        style: AppTextStyles.h5.copyWith(
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      _buildInfoRow('Ad Soyad', _userName),
-                      SizedBox(height: 12.h),
-                      _buildInfoRow('E-posta', _userEmail),
-                      SizedBox(height: 12.h),
-                      _buildInfoRow('Üyelik Tarihi', '15 Ocak 2024'),
-                    ],
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 32.h),
-
-              // Favorite Movies Section
-              SlideTransition(
-                position: _slideAnimation,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppStrings.likedMovies,
-                          style: AppTextStyles.h5.copyWith(
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Navigate to all favorites
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Tüm favoriler sayfası yakında!'),
-                                backgroundColor: AppColors.info,
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Tümünü Gör',
+                          label: Text(
+                            _profileImage != null
+                                ? AppStrings.changePhoto
+                                : AppStrings.uploadPhoto,
                             style: AppTextStyles.link,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
-                    if (_favoriteMovies.isEmpty)
-                      Container(
-                        height: 200.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: AppColors.border,
-                            width: 1.w,
-                          ),
-                        ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/Type=Default.svg',
-                                width: 48.w,
-                                height: 48.h,
-                                colorFilter: const ColorFilter.mode(
-                                  AppColors.textSecondary,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                              SizedBox(height: 16.h),
-                              Text(
-                                'Henüz favori filminiz yok',
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    else
-                      SizedBox(
-                        height: 280.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _favoriteMovies.length,
-                          itemBuilder: (context, index) {
-                            final movie = _favoriteMovies[index];
-                            return Padding(
-                              padding: EdgeInsets.only(right: 16.w),
-                              child: MovieCard(
-                                movie: movie,
-                                isFavorite: true,
-                                onFavoriteTap: () {
-                                  setState(() {
-                                    _favoriteMovies.removeAt(index);
-                                  });
-                                },
-                                onTap: () {
-                                  // Navigate to movie details
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          '${movie.title} detaylarına gidiliyor...'),
-                                      backgroundColor: AppColors.primary,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                  ],
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 40.h),
-            ],
+                SizedBox(height: 32.h),
+
+                // User Info
+                SlideTransition(
+                  position: _slideAnimation,
+                  child: Container(
+                    padding: EdgeInsets.all(20.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                        color: AppColors.border,
+                        width: 1.w,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Profil Bilgileri',
+                          style: AppTextStyles.h5.copyWith(
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        _buildInfoRow('Ad Soyad', _userName),
+                        SizedBox(height: 12.h),
+                        _buildInfoRow('E-posta', _userEmail),
+                        SizedBox(height: 12.h),
+                        _buildInfoRow('Üyelik Tarihi', '15 Ocak 2024'),
+                      ],
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 32.h),
+
+                // Favorite Movies Section
+                SlideTransition(
+                  position: _slideAnimation,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppStrings.likedMovies,
+                            style: AppTextStyles.h5.copyWith(
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Navigate to all favorites
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Tüm favoriler sayfası yakında!'),
+                                  backgroundColor: AppColors.info,
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Tümünü Gör',
+                              style: AppTextStyles.link,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+                      if (_favoriteMovies.isEmpty)
+                        Container(
+                          height: 200.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                              color: AppColors.border,
+                              width: 1.w,
+                            ),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/Type=Default.svg',
+                                  width: 48.w,
+                                  height: 48.h,
+                                  colorFilter: const ColorFilter.mode(
+                                    AppColors.textSecondary,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                SizedBox(height: 16.h),
+                                Text(
+                                  'Henüz favori filminiz yok',
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox(
+                          height: 280.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _favoriteMovies.length,
+                            itemBuilder: (context, index) {
+                              final movie = _favoriteMovies[index];
+                              return Padding(
+                                padding: EdgeInsets.only(right: 16.w),
+                                child: MovieCard(
+                                  movie: movie,
+                                  isFavorite: true,
+                                  onFavoriteTap: () {
+                                    setState(() {
+                                      _favoriteMovies.removeAt(index);
+                                    });
+                                  },
+                                  onTap: () {
+                                    // Navigate to movie details
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            '${movie.title} detaylarına gidiliyor...'),
+                                        backgroundColor: AppColors.primary,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 40.h),
+              ],
+            ),
           ),
         ),
       ),
