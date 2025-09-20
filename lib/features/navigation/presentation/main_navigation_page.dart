@@ -43,22 +43,31 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AppBackground(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = NavItem.values[index];
-            });
-          },
-          children: const [
-            HomePage(),
-            ProfilePage(),
+        child: Stack(
+          children: [
+            PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentIndex = NavItem.values[index];
+                });
+              },
+              children: const [
+                HomePage(),
+                ProfilePage(),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: CustomBottomNavBar(
+                currentIndex: _currentIndex,
+                onTap: _onNavItemTapped,
+              ),
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: _onNavItemTapped,
       ),
     );
   }

@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             );
                           },
                           icon: SvgPicture.asset(
-                            'assets/icons/Components/User.svg',
+                            'assets/icons/icon/Component/Components/User.svg',
                             width: 24.w,
                             height: 24.h,
                             colorFilter: const ColorFilter.mode(
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             );
                           },
                           icon: SvgPicture.asset(
-                            'assets/icons/Components/User.svg',
+                            'assets/icons/icon/Component/Components/User.svg',
                             width: 24.w,
                             height: 24.h,
                             colorFilter: const ColorFilter.mode(

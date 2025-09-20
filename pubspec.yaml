@@ -95,6 +95,14 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/navbar/
+    - assets/icons/icon/Component/Components/
+    - assets/icons/fav_button/
+    - assets/icons/button/
+    - assets/icons/coin_options/
+    - assets/icons/liked_cards/
+    - assets/icons/upload/
+    - assets/icons/input/
     - assets/animations/
     - assets/images/icon.svg
     - assets/images/Shine Effect.svg
