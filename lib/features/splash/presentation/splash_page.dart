@@ -87,7 +87,7 @@ class SplashPage extends StatelessWidget {
                 Text(
                   AppStrings.appName,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.h6.copyWith(
+                  style: AppTextStyles.h6(context).copyWith(
                     fontSize: 33.32.sp,
                     fontWeight: FontWeight.w700,
                     height: 1.2,

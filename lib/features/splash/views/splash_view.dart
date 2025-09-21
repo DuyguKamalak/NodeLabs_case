@@ -174,7 +174,7 @@ class _SplashViewState extends State<SplashView>
                   // App Name
                   Text(
                     AppStrings.appName,
-                    style: AppTextStyles.h1,
+                    style: AppTextStyles.h1(context),
                   ),
 
                   const SizedBox(height: 8),
@@ -182,7 +182,7 @@ class _SplashViewState extends State<SplashView>
                   // App Version
                   Text(
                     'v${AppStrings.appVersion}',
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.caption(context).copyWith(
                       color: AppColors.textSecondary,
                     ),
                   ),
@@ -210,7 +210,7 @@ class _SplashViewState extends State<SplashView>
                 // Loading text
                 Text(
                   AppStrings.loading,
-                  style: AppTextStyles.bodySmall.copyWith(
+                  style: AppTextStyles.bodySmall(context).copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),

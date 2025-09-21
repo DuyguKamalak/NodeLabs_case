@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/utils/responsive_utils.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text_form_field/app_text_form_field.dart';
 import '../../../core/widgets/common/app_background.dart';
@@ -110,319 +111,395 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       backgroundColor: Colors.transparent,
       body: AppBackground(
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 40.h),
-
-                  // Lottie Animation Header (Üstte)
-                  FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Container(
-                      height: 200.h,
-                      margin: EdgeInsets.only(bottom: 20.h),
-                      child: Lottie.asset(
-                        'assets/animations/Artboard_1.json',
-                        fit: BoxFit.contain,
-                        repeat: true,
-                        errorBuilder: (context, error, stackTrace) {
-                          // Fallback if animation file doesn't exist
-                          return Container(
-                            height: 200.h,
-                            decoration: BoxDecoration(
-                              color: AppColors.surface,
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.movie,
-                                size: 80.w,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-
-                  // Logo (78x78)
-                  FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/images/icon.svg',
-                        width: 78.w,
-                        height: 78.h,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // "Giriş Yap" Text
-                  FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Text(
-                      'Giriş Yap',
-                      style: GoogleFonts.instrumentSans(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.white,
-                        height: 1.0,
-                        letterSpacing: 0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  SizedBox(height: 8.h),
-
-                  // "Kullanıcı bilgilerinle giriş yap" Text
-                  FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Text(
-                      'Kullanıcı bilgilerinle giriş yap',
-                      style: GoogleFonts.instrumentSans(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.white.withOpacity(0.9), // 90% opacity
-                        height: 1.0,
-                        letterSpacing: 0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  SizedBox(height: 40.h),
-
-                  // Email Field (354x56)
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: Center(
-                      child: SizedBox(
-                        width: 354.w,
-                        child: AppTextFormField(
-                          controller: _emailController,
-                          labelText: 'E-Posta',
-                          hintText: 'E-posta adresinizi girin',
-                          prefixIcon: Icon(
-                            Icons.email_outlined,
-                            size: 20.w,
-                            color: AppColors.textSecondary,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'E-posta adresi gerekli';
-                            }
-                            if (!value.contains('@')) {
-                              return 'Geçerli bir e-posta adresi girin';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 16.h),
-
-                  // Password Field (354x56)
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: Center(
-                      child: SizedBox(
-                        width: 354.w,
-                        child: AppTextFormField(
-                          controller: _passwordController,
-                          labelText: 'Şifre',
-                          hintText: 'Şifrenizi girin',
-                          prefixIcon: Icon(
-                            Icons.lock_outline,
-                            size: 20.w,
-                            color: AppColors.textSecondary,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
-                              size: 20.w,
-                              color: AppColors.textSecondary,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              });
-                            },
-                          ),
-                          obscureText: !_isPasswordVisible,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Şifre gerekli';
-                            }
-                            if (value.length < 6) {
-                              return 'Şifre en az 6 karakter olmalı';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 12.h),
-
-                  // Forgot Password Link
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // Forgot password functionality
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text('Şifre sıfırlama özelliği yakında!'),
-                              backgroundColor: AppColors.info,
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Şifre Unuttum',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.white,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 32.h),
-
-                  // Login Button
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: AppButton(
-                      text: 'Giriş Yap',
-                      onPressed: _handleLogin,
-                      type: AppButtonType.primary,
-                    ),
-                  ),
-
-                  SizedBox(height: 32.h),
-
-                  // Social Login Buttons (60x60)
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          child: ResponsiveUtils.responsiveBuilder(
+            builder: (context, deviceType) {
+              return ResponsiveUtils.constrainedContainer(
+                context: context,
+                child: SingleChildScrollView(
+                  padding: ResponsiveUtils.getPagePadding(context),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _buildSocialButton(
-                          icon: Icons.g_mobiledata,
-                          onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Google girişi yakında!'),
-                                backgroundColor: AppColors.info,
-                              ),
-                            );
-                          },
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 40)),
+
+                        // Lottie Animation Header - responsive
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: _buildAnimationHeader(context, deviceType),
                         ),
-                        SizedBox(width: 16.w),
-                        _buildSocialButton(
-                          icon: Icons.apple,
-                          onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Apple girişi yakında!'),
-                                backgroundColor: AppColors.info,
-                              ),
-                            );
-                          },
+
+                        // Logo - responsive
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: _buildLogo(context),
                         ),
-                        SizedBox(width: 16.w),
-                        _buildSocialButton(
-                          icon: Icons.facebook,
-                          onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Facebook girişi yakında!'),
-                                backgroundColor: AppColors.info,
-                              ),
-                            );
-                          },
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 24)),
+
+                        // Title and subtitle - responsive
+                        _buildTitleSection(context),
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 40)),
+
+                        // Form fields - responsive
+                        _buildFormFields(context, deviceType),
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 32)),
+
+                        // Login Button - responsive
+                        SlideTransition(
+                          position: _slideAnimation,
+                          child: _buildLoginButton(context),
                         ),
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 32)),
+
+                        // Social Login Buttons - responsive
+                        SlideTransition(
+                          position: _slideAnimation,
+                          child: _buildSocialButtons(context, deviceType),
+                        ),
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 32)),
+
+                        // Sign Up Link - responsive
+                        _buildSignUpLink(context),
+
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 40)),
                       ],
                     ),
                   ),
-
-                  SizedBox(height: 32.h),
-
-                  // Sign Up Link
-                  SlideTransition(
-                    position: _slideAnimation,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Bir hesabın yok mu? ',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.white60,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: _navigateToRegister,
-                          child: Text(
-                            'Kayıt Ol',
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: 40.h),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
     );
   }
 
-  Widget _buildSocialButton({
+  Widget _buildAnimationHeader(
+      BuildContext context, ResponsiveDeviceType deviceType) {
+    final animationHeight = ResponsiveUtils.isMobile(context) ? 200.h : 250.h;
+    final bottomMargin = ResponsiveUtils.getResponsiveSpacing(context, 20);
+    final borderRadius = ResponsiveUtils.getResponsiveBorderRadius(context, 16);
+
+    return Container(
+      height: animationHeight,
+      margin: EdgeInsets.only(bottom: bottomMargin),
+      child: Lottie.asset(
+        'assets/animations/Artboard_1.json',
+        fit: BoxFit.contain,
+        repeat: true,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            height: animationHeight,
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.movie,
+                size: ResponsiveUtils.getResponsiveIconSize(context, 80),
+                color: AppColors.textSecondary,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildLogo(BuildContext context) {
+    final logoSize = ResponsiveUtils.isMobile(context) ? 78.w : 88.w;
+
+    return Center(
+      child: SvgPicture.asset(
+        'assets/images/icon.svg',
+        width: logoSize,
+        height: logoSize,
+      ),
+    );
+  }
+
+  Widget _buildTitleSection(BuildContext context) {
+    return Column(
+      children: [
+        FadeTransition(
+          opacity: _fadeAnimation,
+          child: Text(
+            'Giriş Yap',
+            style: GoogleFonts.instrumentSans(
+              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 24),
+              fontWeight: FontWeight.w700,
+              color: AppColors.white,
+              height: 1.0,
+              letterSpacing: 0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 8)),
+        FadeTransition(
+          opacity: _fadeAnimation,
+          child: Text(
+            'Kullanıcı bilgilerinle giriş yap',
+            style: GoogleFonts.instrumentSans(
+              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
+              fontWeight: FontWeight.w400,
+              color: AppColors.white.withOpacity(0.9),
+              height: 1.0,
+              letterSpacing: 0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFormFields(
+      BuildContext context, ResponsiveDeviceType deviceType) {
+    final fieldWidth =
+        ResponsiveUtils.isMobile(context) ? double.infinity : 400.w;
+    final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 20);
+    final spacing = ResponsiveUtils.getResponsiveSpacing(context, 16);
+
+    return Column(
+      children: [
+        // Email Field
+        SlideTransition(
+          position: _slideAnimation,
+          child: Center(
+            child: SizedBox(
+              width: fieldWidth,
+              child: AppTextFormField(
+                controller: _emailController,
+                labelText: 'E-Posta',
+                hintText: 'E-posta adresinizi girin',
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  size: iconSize,
+                  color: AppColors.textSecondary,
+                ),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'E-posta adresi gerekli';
+                  }
+                  if (!value.contains('@')) {
+                    return 'Geçerli bir e-posta adresi girin';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: spacing),
+
+        // Password Field
+        SlideTransition(
+          position: _slideAnimation,
+          child: Center(
+            child: SizedBox(
+              width: fieldWidth,
+              child: AppTextFormField(
+                controller: _passwordController,
+                labelText: 'Şifre',
+                hintText: 'Şifrenizi girin',
+                prefixIcon: Icon(
+                  Icons.lock_outline,
+                  size: iconSize,
+                  color: AppColors.textSecondary,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: iconSize,
+                    color: AppColors.textSecondary,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                ),
+                obscureText: !_isPasswordVisible,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Şifre gerekli';
+                  }
+                  if (value.length < 6) {
+                    return 'Şifre en az 6 karakter olmalı';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ),
+
+        SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 12)),
+
+        // Forgot Password Link
+        SlideTransition(
+          position: _slideAnimation,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Şifre sıfırlama özelliği yakında!'),
+                    backgroundColor: AppColors.info,
+                  ),
+                );
+              },
+              child: Text(
+                'Şifre Unuttum',
+                style: AppTextStyles.bodyMedium(context).copyWith(
+                  color: AppColors.white,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
+    return AppButton(
+      text: 'Giriş Yap',
+      onPressed: _handleLogin,
+      type: AppButtonType.primary,
+    );
+  }
+
+  Widget _buildSocialButtons(
+      BuildContext context, ResponsiveDeviceType deviceType) {
+    final spacing = ResponsiveUtils.getResponsiveSpacing(context, 16);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildSocialButton(
+          context,
+          icon: Icons.g_mobiledata,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Google girişi yakında!'),
+                backgroundColor: AppColors.info,
+              ),
+            );
+          },
+        ),
+        SizedBox(width: spacing),
+        _buildSocialButton(
+          context,
+          icon: Icons.apple,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Apple girişi yakında!'),
+                backgroundColor: AppColors.info,
+              ),
+            );
+          },
+        ),
+        SizedBox(width: spacing),
+        _buildSocialButton(
+          context,
+          icon: Icons.facebook,
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Facebook girişi yakında!'),
+                backgroundColor: AppColors.info,
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSignUpLink(BuildContext context) {
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Bir hesabın yok mu? ',
+            style: AppTextStyles.bodyMedium(context).copyWith(
+              color: AppColors.white60,
+            ),
+          ),
+          TextButton(
+            onPressed: _navigateToRegister,
+            child: Text(
+              'Kayıt Ol',
+              style: AppTextStyles.bodyMedium(context).copyWith(
+                color: AppColors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialButton(
+    BuildContext context, {
     required IconData icon,
     required VoidCallback onTap,
   }) {
+    final buttonSize = ResponsiveUtils.isMobile(context) ? 60.w : 70.w;
+    final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 24);
+    final borderRadius = ResponsiveUtils.getResponsiveBorderRadius(context, 12);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 60.w,
-        height: 60.h,
+        width: buttonSize,
+        height: buttonSize,
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
             color: AppColors.border,
-            width: 1,
+            width: ResponsiveUtils.isMobile(context) ? 1.w : 1.5.w,
           ),
         ),
         child: Center(
           child: Icon(
             icon,
-            size: 24.w,
+            size: iconSize,
             color: AppColors.white,
           ),
         ),

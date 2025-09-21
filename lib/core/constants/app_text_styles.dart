@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
+import '../utils/responsive_utils.dart';
 
 /// Uygulama tipografi stilleri - Instrument Sans
 class AppTextStyles {
@@ -9,278 +10,301 @@ class AppTextStyles {
   // Base Font Family
   static String get fontFamily => GoogleFonts.instrumentSans().fontFamily!;
 
-  // Heading Styles
-  static TextStyle get h1 => GoogleFonts.instrumentSans(
-        fontSize: 48,
+  // Responsive Heading Styles
+  static TextStyle h1(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 48),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get h2 => GoogleFonts.instrumentSans(
-        fontSize: 40,
+  static TextStyle h2(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 40),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get h3 => GoogleFonts.instrumentSans(
-        fontSize: 32,
+  static TextStyle h3(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 32),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get h4 => GoogleFonts.instrumentSans(
-        fontSize: 24,
+  static TextStyle h4(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 24),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get h5 => GoogleFonts.instrumentSans(
-        fontSize: 20,
+  static TextStyle h5(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 20),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get h6 => GoogleFonts.instrumentSans(
-        fontSize: 18,
+  static TextStyle h6(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  // Body XLarge Styles
-  static TextStyle get bodyXLargeBold => GoogleFonts.instrumentSans(
-        fontSize: 18,
+  // Responsive Body XLarge Styles
+  static TextStyle bodyXLargeBold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXLargeSemibold => GoogleFonts.instrumentSans(
-        fontSize: 18,
+  static TextStyle bodyXLargeSemibold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXLargeMedium => GoogleFonts.instrumentSans(
-        fontSize: 18,
+  static TextStyle bodyXLargeMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXLarge => GoogleFonts.instrumentSans(
-        fontSize: 18,
+  static TextStyle bodyXLarge(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  // Body Large Styles
-  static TextStyle get bodyLargeBold => GoogleFonts.instrumentSans(
-        fontSize: 16,
+  // Responsive Body Large Styles
+  static TextStyle bodyLargeBold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyLargeSemibold => GoogleFonts.instrumentSans(
-        fontSize: 16,
+  static TextStyle bodyLargeSemibold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyLargeMedium => GoogleFonts.instrumentSans(
-        fontSize: 16,
+  static TextStyle bodyLargeMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyLarge => GoogleFonts.instrumentSans(
-        fontSize: 16,
+  static TextStyle bodyLarge(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  // Body Normal/Medium Styles
-  static TextStyle get bodyMediumBold => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  // Responsive Body Normal/Medium Styles
+  static TextStyle bodyMediumBold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyMediumSemibold => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  static TextStyle bodyMediumSemibold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyMediumMedium => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  static TextStyle bodyMediumMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyMedium => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  static TextStyle bodyMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  // Body Small Styles
-  static TextStyle get bodySmallBold => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  // Responsive Body Small Styles
+  static TextStyle bodySmallBold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodySmallSemibold => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle bodySmallSemibold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodySmallMedium => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle bodySmallMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodySmall => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle bodySmall(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  // Body XSmall Styles
-  static TextStyle get bodyXSmallBold => GoogleFonts.instrumentSans(
-        fontSize: 10,
+  // Responsive Body XSmall Styles
+  static TextStyle bodyXSmallBold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXSmallSemibold => GoogleFonts.instrumentSans(
-        fontSize: 10,
+  static TextStyle bodyXSmallSemibold(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXSmallMedium => GoogleFonts.instrumentSans(
-        fontSize: 10,
+  static TextStyle bodyXSmallMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  static TextStyle get bodyXSmall => GoogleFonts.instrumentSans(
-        fontSize: 10,
+  static TextStyle bodyXSmall(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
       );
 
-  // Legacy styles for backward compatibility
-  static TextStyle get body => bodyMedium;
-  static TextStyle get caption => bodyXSmall;
+  // Legacy styles for backward compatibility - now require context
+  static TextStyle body(BuildContext context) => bodyMedium(context);
+  static TextStyle caption(BuildContext context) => bodyXSmall(context);
 
-  // Button Styles
-  static TextStyle get buttonLarge => GoogleFonts.instrumentSans(
-        fontSize: 16,
+  // Responsive Button Styles
+  static TextStyle buttonLarge(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w600,
         color: AppColors.white,
         height: 1.2,
       );
 
-  static TextStyle get buttonMedium => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  static TextStyle buttonMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w600,
         color: AppColors.white,
         height: 1.2,
       );
 
-  static TextStyle get buttonSmall => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle buttonSmall(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w600,
         color: AppColors.white,
         height: 1.2,
       );
 
-  // Link Styles
-  static TextStyle get link => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  // Responsive Link Styles
+  static TextStyle link(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w500,
         color: AppColors.primary,
         height: 1.2,
         decoration: TextDecoration.underline,
       );
 
-  // Error Styles
-  static TextStyle get error => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  // Responsive Message Styles
+  static TextStyle error(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400,
         color: AppColors.error,
         height: 1.2,
       );
 
-  // Success Styles
-  static TextStyle get success => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle success(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400,
         color: AppColors.success,
         height: 1.2,
       );
 
-  // Warning Styles
-  static TextStyle get warning => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle warning(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400,
         color: AppColors.warning,
         height: 1.2,
       );
 
-  // Info Styles
-  static TextStyle get info => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle info(BuildContext context) => GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400,
         color: AppColors.info,
         height: 1.2,
       );
 
-  // Label Styles
-  static TextStyle get labelLarge => GoogleFonts.instrumentSans(
-        fontSize: 14,
+  // Responsive Label Styles
+  static TextStyle labelLarge(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w500,
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get labelMedium => GoogleFonts.instrumentSans(
-        fontSize: 12,
+  static TextStyle labelMedium(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w500,
         color: AppColors.textPrimary,
         height: 1.2,
       );
 
-  static TextStyle get labelSmall => GoogleFonts.instrumentSans(
-        fontSize: 10,
+  static TextStyle labelSmall(BuildContext context) =>
+      GoogleFonts.instrumentSans(
+        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w500,
         color: AppColors.textPrimary,
         height: 1.2,

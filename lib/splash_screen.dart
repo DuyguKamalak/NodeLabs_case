@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'core/utils/responsive_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -66,78 +67,94 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // Arka plan: linear-gradient(0deg, #090909 40%, #3F0306 100%)
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  Color(0xFF090909),
-                  Color(0xFF3F0306),
-                ],
-                stops: [0.4, 1.0],
-              ),
-            ),
-          ),
-          // Üst blur: Figma'daki "Shine Effect.svg" birebir kullanılıyor
-          Positioned(
-            top: -56,
-            left: 0,
-            right: 0,
-            child: IgnorePointer(
-              child: Center(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 50.6, sigmaY: 50.6),
-                  child: SvgPicture.asset(
-                    'assets/images/Shine Effect.svg',
-                    width: size.width * 0.92,
-                    fit: BoxFit.contain,
+      body: ResponsiveUtils.responsiveBuilder(
+        builder: (context, deviceType) {
+          final size = MediaQuery.of(context).size;
+          final iconSize = ResponsiveUtils.isMobile(context) ? 88.w : 120.w;
+          final titleFontSize =
+              ResponsiveUtils.getResponsiveFontSize(context, 33.32);
+          final spacing = ResponsiveUtils.getResponsiveSpacing(context, 16);
+
+          return Stack(
+            children: [
+              // Arka plan: linear-gradient(0deg, #090909 40%, #3F0306 100%)
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Color(0xFF090909),
+                      Color(0xFF3F0306),
+                    ],
+                    stops: [0.4, 1.0],
                   ),
                 ),
               ),
-            ),
-          ),
-          SafeArea(
-            child: Center(
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: ScaleTransition(
-                  scale: _scaleAnimation,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // İkon: doğrudan SVG kullanımı (kapsülü svg'nin içinde)
-                      SvgPicture.asset(
-                        'assets/images/icon.svg',
-                        width: 88.w,
-                        height: 88.h,
+              // Üst blur: Responsive shine effect
+              Positioned(
+                top: ResponsiveUtils.isMobile(context) ? -56 : -80,
+                left: 0,
+                right: 0,
+                child: IgnorePointer(
+                  child: Center(
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(
+                        sigmaX: ResponsiveUtils.isMobile(context) ? 50.6 : 60.0,
+                        sigmaY: ResponsiveUtils.isMobile(context) ? 50.6 : 60.0,
                       ),
-                      SizedBox(height: 16.h),
-                      Text(
-                        'Shartflix',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.plusJakartaSans(
-                          color: Colors.white,
-                          fontSize: 33.32.sp,
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          letterSpacing: 0,
+                      child: SvgPicture.asset(
+                        'assets/images/Shine Effect.svg',
+                        width: size.width *
+                            (ResponsiveUtils.isMobile(context) ? 0.92 : 0.8),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SafeArea(
+                child: ResponsiveUtils.constrainedContainer(
+                  context: context,
+                  child: Center(
+                    child: FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // İkon: responsive SVG
+                            SvgPicture.asset(
+                              'assets/images/icon.svg',
+                              width: iconSize,
+                              height: iconSize,
+                            ),
+                            SizedBox(height: spacing),
+                            // App title: responsive text
+                            Text(
+                              'Shartflix',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.plusJakartaSans(
+                                color: Colors.white,
+                                fontSize: titleFontSize,
+                                fontWeight: FontWeight.w700,
+                                height: 1.2,
+                                letterSpacing: 0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

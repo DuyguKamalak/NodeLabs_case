@@ -54,7 +54,7 @@ class AppTextFormField extends StatelessWidget {
         if (labelText != null) ...[
           Text(
             labelText!,
-            style: AppTextStyles.bodyMedium.copyWith(
+            style: AppTextStyles.bodyMedium(context).copyWith(
               color: AppColors.white,
               fontWeight: FontWeight.w500,
             ),
@@ -76,12 +76,12 @@ class AppTextFormField extends StatelessWidget {
           onFieldSubmitted: onFieldSubmitted,
           focusNode: focusNode,
           autofocus: autofocus,
-          style: AppTextStyles.bodyMedium.copyWith(
+          style: AppTextStyles.bodyMedium(context).copyWith(
             color: AppColors.white,
           ),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: AppTextStyles.bodyMedium.copyWith(
+            hintStyle: AppTextStyles.bodyMedium(context).copyWith(
               color: AppColors.textSecondary,
             ),
             prefixIcon: prefixIcon,

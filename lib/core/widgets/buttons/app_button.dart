@@ -97,41 +97,47 @@ class AppButton extends StatelessWidget {
   }
 
   Widget _buildButtonContent() {
-    if (isLoading) {
-      return SizedBox(
-        width: 20.w,
-        height: 20.h,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(
-            type == AppButtonType.primary ? AppColors.white : AppColors.primary,
-          ),
-        ),
-      );
-    }
-
-    if (icon != null) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          icon!,
-          SizedBox(width: 8.w),
-          Text(
-            text,
-            style: AppTextStyles.buttonLarge.copyWith(
-              color: _getTextColor(),
+    return Builder(
+      builder: (context) {
+        if (isLoading) {
+          return SizedBox(
+            width: 20.w,
+            height: 20.h,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                type == AppButtonType.primary
+                    ? AppColors.white
+                    : AppColors.primary,
+              ),
             ),
-          ),
-        ],
-      );
-    }
+          );
+        }
 
-    return Text(
-      text,
-      style: AppTextStyles.buttonLarge.copyWith(
-        color: _getTextColor(),
-      ),
+        if (icon != null) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              icon!,
+              SizedBox(width: 8.w),
+              Text(
+                text,
+                style: AppTextStyles.buttonLarge(context).copyWith(
+                  color: _getTextColor(),
+                ),
+              ),
+            ],
+          );
+        }
+
+        return Text(
+          text,
+          style: AppTextStyles.buttonLarge(context).copyWith(
+            color: _getTextColor(),
+          ),
+        );
+      },
     );
   }
 

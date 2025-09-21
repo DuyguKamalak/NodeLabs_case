@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/utils/responsive_utils.dart';
 import '../../data/models/movie_model.dart';
 
 class MovieCard extends StatelessWidget {
@@ -19,82 +20,134 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Movie Poster - Flexible boyutlandırma
-          Expanded(
-            child: AspectRatio(
-              aspectRatio: 169 / 196, // Orijinal aspect ratio
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: movie.posterPath != null && movie.posterPath!.isNotEmpty
-                    ? Image.asset(
-                        movie.posterPath!,
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: AppColors.surface,
-                            child: Center(
-                              child: Icon(
-                                Icons.movie,
-                                color: AppColors.textSecondary,
-                                size: 40.w,
-                              ),
-                            ),
-                          );
-                        },
-                      )
-                    : Container(
-                        color: AppColors.surface,
-                        child: Center(
-                          child: Icon(
-                            Icons.movie,
-                            color: AppColors.textSecondary,
-                            size: 40.w,
-                          ),
-                        ),
-                      ),
-              ),
-            ),
-          ),
+    return ResponsiveUtils.responsiveBuilder(
+      builder: (context, deviceType) {
+        final borderRadius =
+            ResponsiveUtils.getResponsiveBorderRadius(context, 8);
+        final titleFontSize =
+            ResponsiveUtils.getResponsiveFontSize(context, 16);
+        final subtitleFontSize =
+            ResponsiveUtils.getResponsiveFontSize(context, 14);
+        final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 40);
+        final spacing = ResponsiveUtils.getResponsiveSpacing(context, 8);
+        final smallSpacing = ResponsiveUtils.getResponsiveSpacing(context, 4);
 
-          // Movie Info - Sabit yükseklik
-          SizedBox(height: 8.h),
-          SizedBox(
-            height: 20.h, // Başlık için sabit yükseklik
-            child: Text(
-              movie.title,
-              style: TextStyle(
-                fontFamily: 'Instrument Sans',
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                color: Colors.white,
+        // Responsive text heights
+        final titleHeight = ResponsiveUtils.isMobile(context) ? 20.h : 24.h;
+        final subtitleHeight = ResponsiveUtils.isMobile(context) ? 18.h : 20.h;
+
+        return GestureDetector(
+          onTap: onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Movie Poster - Responsive aspect ratio
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: ResponsiveUtils.isMobile(context)
+                      ? 169 / 196 // Original mobile ratio
+                      : 3 / 4, // Slightly different for larger screens
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(borderRadius),
+                        child: movie.posterPath != null &&
+                                movie.posterPath!.isNotEmpty
+                            ? Image.asset(
+                                movie.posterPath!,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return _buildPlaceholder(iconSize);
+                                },
+                              )
+                            : _buildPlaceholder(iconSize),
+                      ),
+                      // Favorite button overlay (conditional)
+                      if (onFavoriteTap != null)
+                        Positioned(
+                          top: ResponsiveUtils.getResponsiveSpacing(context, 8),
+                          right:
+                              ResponsiveUtils.getResponsiveSpacing(context, 8),
+                          child: _buildFavoriteButton(context),
+                        ),
+                    ],
+                  ),
+                ),
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          SizedBox(height: 4.h),
-          SizedBox(
-            height: 18.h, // Alt yazı için sabit yükseklik
-            child: Text(
-              movie.overview, // Using overview field for studio/producer
-              style: TextStyle(
-                fontFamily: 'Instrument Sans',
-                fontWeight: FontWeight.w400,
-                fontSize: 14.sp,
-                color: Colors.white.withOpacity(0.7),
+
+              // Movie Info - Responsive spacing and text
+              SizedBox(height: spacing),
+              SizedBox(
+                height: titleHeight,
+                child: Text(
+                  movie.title,
+                  style: TextStyle(
+                    fontFamily: 'Instrument Sans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: titleFontSize,
+                    color: Colors.white,
+                    height: 1.2,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+              SizedBox(height: smallSpacing),
+              SizedBox(
+                height: subtitleHeight,
+                child: Text(
+                  movie.overview, // Using overview field for studio/producer
+                  style: TextStyle(
+                    fontFamily: 'Instrument Sans',
+                    fontWeight: FontWeight.w400,
+                    fontSize: subtitleFontSize,
+                    color: Colors.white.withOpacity(0.7),
+                    height: 1.2,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildPlaceholder(double iconSize) {
+    return Container(
+      color: AppColors.surface,
+      child: Center(
+        child: Icon(
+          Icons.movie,
+          color: AppColors.textSecondary,
+          size: iconSize,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFavoriteButton(BuildContext context) {
+    final buttonSize = ResponsiveUtils.getResponsiveIconSize(context, 32);
+    final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 16);
+
+    return GestureDetector(
+      onTap: onFavoriteTap,
+      child: Container(
+        width: buttonSize,
+        height: buttonSize,
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(buttonSize / 2),
+        ),
+        child: Icon(
+          isFavorite ? Icons.favorite : Icons.favorite_border,
+          color: isFavorite ? Colors.red : Colors.white,
+          size: iconSize,
+        ),
       ),
     );
   }
