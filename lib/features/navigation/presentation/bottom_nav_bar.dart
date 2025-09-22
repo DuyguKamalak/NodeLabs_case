@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/responsive_utils.dart';
 
 enum NavItem {
@@ -31,15 +32,7 @@ class CustomBottomNavBar extends StatelessWidget {
           width: double.infinity,
           height: navHeight + bottomPadding + (isDesktop ? 0 : 20.h),
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 0.20],
-              colors: [
-                Color.fromRGBO(9, 9, 9, 0), // rgba(9, 9, 9, 0) 0%
-                Color(0xFF090909), // #090909 20%
-              ],
-            ),
+            gradient: AppColors.navbarBottomGradient,
           ),
           child: ResponsiveUtils.constrainedContainer(
             context: context,
@@ -102,7 +95,7 @@ class CustomBottomNavBar extends StatelessWidget {
               'assets/icons/icon/Component/Components/Home-fill.svg',
               'assets/icons/icon/Component/Components/Home.svg',
             ),
-            SizedBox(width: ResponsiveUtils.getResponsiveSpacing(context, 24)),
+            SizedBox(width: ResponsiveUtils.getResponsiveSpacing(context, 20)),
             _buildNavItem(
               context,
               NavItem.profile,
@@ -137,11 +130,11 @@ class CustomBottomNavBar extends StatelessWidget {
 
     // Responsive button width based on device type
     final buttonWidth = switch (deviceType) {
-      ResponsiveDeviceType.mobile => 140.w,
-      ResponsiveDeviceType.tablet => 160.w,
+      ResponsiveDeviceType.mobile => 150.w,
+      ResponsiveDeviceType.tablet => 175.w,
       ResponsiveDeviceType.desktop ||
       ResponsiveDeviceType.largeDesktop =>
-        180.w,
+        200.w,
     };
 
     return GestureDetector(
@@ -155,21 +148,12 @@ class CustomBottomNavBar extends StatelessWidget {
           vertical: verticalPadding,
         ),
         decoration: BoxDecoration(
-          gradient: isActive
-              ? const RadialGradient(
-                  center: Alignment(0.0, -0.67), // 50% 16.67% position
-                  radius: 0.83, // 83.33% radius
-                  colors: [
-                    Color(0xFFE50914), // #E50914 0%
-                    Color(0xFF7F050B), // #7F050B 100%
-                  ],
-                )
-              : null,
+          gradient: isActive ? AppColors.buttonRadialGradient : null,
           color: isActive ? null : Colors.transparent,
           border: isActive
               ? null
               : Border.all(
-                  color: const Color(0x33FFFFFF), // #FFFFFF33 (20% opacity)
+                  color: AppColors.white20, // #FFFFFF33 (20% opacity)
                   width: ResponsiveUtils.isMobile(context) ? 1.w : 1.5.w,
                 ),
           borderRadius: BorderRadius.circular(borderRadius),

@@ -82,6 +82,10 @@ class AppColors {
   static const Color transparent = Colors.transparent;
   static const Color shadow = Color(0x29000000);
 
+  // Figma UI Colors (additional)
+  static const Color black5 = Color(0x0D000000); // #0000000D (%5 opak)
+  static const Color darkGray = Color(0xFF090909); // #090909
+
   // App Background Gradient
   static const LinearGradient appBackgroundGradient = LinearGradient(
     begin: Alignment.bottomCenter,
@@ -122,6 +126,30 @@ class AppColors {
     colors: [
       primaryDark, // #6F060B
       primary, // #E50914
+    ],
+    stops: [0.0, 1.0],
+  );
+
+  // Figma Gradients
+
+  // Navbar Bottom Gradient (linear-gradient(180deg, rgba(9, 9, 9, 0) 0%, #090909 29%))
+  static const LinearGradient navbarBottomGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: [0.0, 0.29],
+    colors: [
+      Color(0x00090909), // rgba(9, 9, 9, 0) - şeffaf
+      Color(0xFF090909), // #090909 - %29'da koyu
+    ],
+  );
+
+  // Button Radial Gradient (radial-gradient(58.74% 83.33% at 50% 16.67%, #E50914 0%, #7F050B 100%))
+  static const RadialGradient buttonRadialGradient = RadialGradient(
+    center: Alignment(0.0, -0.6667), // 50% x, 16.67% y pozisyonu
+    radius: 0.83, // %83.33 yarıçap
+    colors: [
+      Color(0xFFE50914), // #E50914 merkezde
+      Color(0xFF7F050B), // #7F050B kenarlarda
     ],
     stops: [0.0, 1.0],
   );

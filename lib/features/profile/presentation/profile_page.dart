@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             SizedBox(
                                 height: ResponsiveUtils.getResponsiveSpacing(
-                                    context, 24)),
+                                    context, 11)),
 
                             // Border çizgisi - responsive genişlikte
                             Container(
@@ -132,15 +132,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
                             SizedBox(
                                 height: ResponsiveUtils.getResponsiveSpacing(
-                                    context, 24)),
+                                    context, 16)),
 
                             // Beğendiklerim Section - Responsive with grid/list
                             _buildLikedSection(context, deviceType),
 
                             SizedBox(
-                                height: ResponsiveUtils.isMobile(context)
-                                    ? 100.h
-                                    : 50.h),
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 16)),
                           ],
                         ),
                       ),
@@ -425,11 +424,8 @@ class _ProfilePageState extends State<ProfilePage> {
         return MovieCard(
           movie: movie,
           isFavorite: true,
-          onFavoriteTap: () {
-            setState(() {
-              _favoriteMovies.removeAt(index);
-            });
-          },
+          onFavoriteTap:
+              null, // Profil sayfasında favori butonu gösterilmeyecek
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -474,11 +470,8 @@ class _ProfilePageState extends State<ProfilePage> {
             return MovieCard(
               movie: movie,
               isFavorite: true,
-              onFavoriteTap: () {
-                setState(() {
-                  _favoriteMovies.removeAt(index);
-                });
-              },
+              onFavoriteTap:
+                  null, // Profil sayfasında favori butonu gösterilmeyecek
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
