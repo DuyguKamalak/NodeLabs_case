@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'core/constants/app_colors.dart';
+import 'core/constants/app_text_styles.dart';
 import 'core/utils/responsive_utils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -68,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.black,
       body: ResponsiveUtils.responsiveBuilder(
         builder: (context, deviceType) {
           final size = MediaQuery.of(context).size;
@@ -82,15 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
               // Arka plan: linear-gradient(0deg, #090909 40%, #3F0306 100%)
               Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Color(0xFF090909),
-                      Color(0xFF3F0306),
-                    ],
-                    stops: [0.4, 1.0],
-                  ),
+                  gradient: AppColors.backgroundGradient,
                 ),
               ),
               // Üst blur: Responsive shine effect
@@ -137,12 +130,8 @@ class _SplashScreenState extends State<SplashScreen>
                             Text(
                               'Shartflix',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.plusJakartaSans(
-                                color: Colors.white,
+                              style: AppTextStyles.h3(context).copyWith(
                                 fontSize: titleFontSize,
-                                fontWeight: FontWeight.w700,
-                                height: 1.2,
-                                letterSpacing: 0,
                               ),
                             ),
                           ],

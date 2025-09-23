@@ -13,10 +13,13 @@ extension AppIconsExtension on AppIcons {
     Alignment alignment = Alignment.center,
     String? semanticsLabel,
   }) {
+    final double effectiveWidth = width ?? 24;
+    final double effectiveHeight = height ?? 24;
+
     return SvgPicture.asset(
       path,
-      width: width,
-      height: height,
+      width: effectiveWidth,
+      height: effectiveHeight,
       colorFilter:
           color != null ? ColorFilter.mode(color, BlendMode.srcIn) : null,
       fit: fit,
@@ -30,10 +33,11 @@ extension AppIconsExtension on AppIcons {
     double? size,
     Color? color,
   }) {
+    final double effectiveSize = size ?? 24;
     return Image.asset(
       path,
-      width: size,
-      height: size,
+      width: effectiveSize,
+      height: effectiveSize,
       color: color,
       fit: BoxFit.contain,
     );

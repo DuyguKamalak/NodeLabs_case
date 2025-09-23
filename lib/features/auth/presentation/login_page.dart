@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/utils/responsive_utils.dart';
@@ -108,7 +107,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       body: AppBackground(
         child: SafeArea(
           child: ResponsiveUtils.responsiveBuilder(
@@ -215,10 +214,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(borderRadius),
             ),
             child: Center(
-              child: Icon(
-                Icons.movie,
-                size: ResponsiveUtils.getResponsiveIconSize(context, 80),
-                color: AppColors.textSecondary,
+              child: SvgPicture.asset(
+                'assets/images/icon.svg',
+                width: ResponsiveUtils.getResponsiveIconSize(context, 80),
+                height: ResponsiveUtils.getResponsiveIconSize(context, 80),
+                colorFilter: const ColorFilter.mode(
+                  AppColors.textSecondary,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           );
@@ -246,12 +249,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           opacity: _fadeAnimation,
           child: Text(
             'Giriş Yap',
-            style: GoogleFonts.instrumentSans(
-              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 24),
-              fontWeight: FontWeight.w700,
-              color: AppColors.white,
+            style: AppTextStyles.h4(context).copyWith(
               height: 1.0,
-              letterSpacing: 0,
             ),
             textAlign: TextAlign.center,
           ),
@@ -261,12 +260,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           opacity: _fadeAnimation,
           child: Text(
             'Kullanıcı bilgilerinle giriş yap',
-            style: GoogleFonts.instrumentSans(
-              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-              fontWeight: FontWeight.w400,
-              color: AppColors.white.withOpacity(0.9),
+            style: AppTextStyles.bodyMedium(context).copyWith(
+              color: AppColors.white90,
               height: 1.0,
-              letterSpacing: 0,
             ),
             textAlign: TextAlign.center,
           ),
@@ -279,7 +275,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       BuildContext context, ResponsiveDeviceType deviceType) {
     final fieldWidth =
         ResponsiveUtils.isMobile(context) ? double.infinity : 400.w;
-    final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 20);
     final spacing = ResponsiveUtils.getResponsiveSpacing(context, 16);
 
     return Column(
@@ -294,10 +289,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 controller: _emailController,
                 labelText: 'E-Posta',
                 hintText: 'E-posta adresinizi girin',
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  size: iconSize,
-                  color: AppColors.textSecondary,
+                prefixIcon: SvgPicture.asset(
+                  'assets/icons/icon/Component/Components/Mail.svg',
+                  width: ResponsiveUtils.getResponsiveIconSize(context, 18),
+                  height: ResponsiveUtils.getResponsiveIconSize(context, 16),
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.textSecondary,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -326,18 +325,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 controller: _passwordController,
                 labelText: 'Şifre',
                 hintText: 'Şifrenizi girin',
-                prefixIcon: Icon(
-                  Icons.lock_outline,
-                  size: iconSize,
-                  color: AppColors.textSecondary,
+                prefixIcon: SvgPicture.asset(
+                  'assets/icons/icon/Component/Components/Lock.svg',
+                  width: ResponsiveUtils.getResponsiveIconSize(context, 18),
+                  height: ResponsiveUtils.getResponsiveIconSize(context, 16),
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.textSecondary,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 suffixIcon: IconButton(
-                  icon: Icon(
+                  icon: SvgPicture.asset(
                     _isPasswordVisible
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    size: iconSize,
-                    color: AppColors.textSecondary,
+                        ? 'assets/icons/icon/Component/Components/See.svg'
+                        : 'assets/icons/icon/Component/Components/Hide.svg',
+                    width: ResponsiveUtils.getResponsiveIconSize(context, 18),
+                    height: ResponsiveUtils.getResponsiveIconSize(context, 16),
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.textSecondary,
+                      BlendMode.srcIn,
+                    ),
                   ),
                   onPressed: () {
                     setState(() {
@@ -407,7 +414,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       children: [
         _buildSocialButton(
           context,
-          icon: Icons.g_mobiledata,
+          iconPath: 'assets/icons/icon/Component/Components/Google.svg',
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -420,7 +427,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
-          icon: Icons.apple,
+          iconPath: 'assets/icons/icon/Component/Components/Apple.svg',
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -433,7 +440,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
-          icon: Icons.facebook,
+          iconPath: 'assets/icons/icon/Component/Components/Facebook.svg',
           onTap: () {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -476,10 +483,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   Widget _buildSocialButton(
     BuildContext context, {
-    required IconData icon,
+    required String iconPath,
     required VoidCallback onTap,
   }) {
-    final buttonSize = ResponsiveUtils.isMobile(context) ? 60.w : 70.w;
+    final buttonSize = ResponsiveUtils.getResponsiveIconSize(context, 60);
     final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 24);
     final borderRadius = ResponsiveUtils.getResponsiveBorderRadius(context, 12);
 
@@ -497,10 +504,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           ),
         ),
         child: Center(
-          child: Icon(
-            icon,
-            size: iconSize,
-            color: AppColors.white,
+          child: SvgPicture.asset(
+            iconPath,
+            width: iconSize,
+            height: iconSize,
+            colorFilter: const ColorFilter.mode(
+              AppColors.white,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),

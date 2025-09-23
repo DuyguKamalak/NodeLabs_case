@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../data/models/movie_model.dart';
 
@@ -83,12 +84,9 @@ class MovieCard extends StatelessWidget {
                 height: titleHeight,
                 child: Text(
                   movie.title,
-                  style: TextStyle(
-                    fontFamily: 'Instrument Sans',
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.bodyLargeSemibold(context).copyWith(
                     fontSize: titleFontSize,
-                    color: Colors.white,
-                    height: 1.2,
+                    color: AppColors.white,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -99,12 +97,9 @@ class MovieCard extends StatelessWidget {
                 height: subtitleHeight,
                 child: Text(
                   movie.overview, // Using overview field for studio/producer
-                  style: TextStyle(
-                    fontFamily: 'Instrument Sans',
-                    fontWeight: FontWeight.w400,
+                  style: AppTextStyles.bodyMedium(context).copyWith(
                     fontSize: subtitleFontSize,
-                    color: Colors.white.withOpacity(0.7),
-                    height: 1.2,
+                    color: AppColors.white70,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

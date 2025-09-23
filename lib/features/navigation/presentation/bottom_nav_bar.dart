@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 
 enum NavItem {
@@ -149,7 +150,7 @@ class CustomBottomNavBar extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           gradient: isActive ? AppColors.buttonRadialGradient : null,
-          color: isActive ? null : Colors.transparent,
+          color: isActive ? null : AppColors.transparent,
           border: isActive
               ? null
               : Border.all(
@@ -167,9 +168,7 @@ class CustomBottomNavBar extends StatelessWidget {
               width: iconSize,
               height: iconSize,
               colorFilter: ColorFilter.mode(
-                isActive
-                    ? Colors.white
-                    : const Color(0xFFFFFFFF).withOpacity(0.6),
+                isActive ? AppColors.white : AppColors.white60,
                 BlendMode.srcIn,
               ),
             ),
@@ -177,14 +176,9 @@ class CustomBottomNavBar extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
-                style: TextStyle(
-                  fontFamily: 'Instrument Sans',
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.bodyMediumSemibold(context).copyWith(
                   fontSize: fontSize,
-                  color: isActive
-                      ? Colors.white
-                      : const Color(0xFFFFFFFF).withOpacity(0.6),
-                  height: 1.2,
+                  color: isActive ? AppColors.white : AppColors.white60,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

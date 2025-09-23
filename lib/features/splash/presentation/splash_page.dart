@@ -22,15 +22,7 @@ class SplashPage extends StatelessWidget {
           // Background linear gradient
           Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  AppColors.splashBottom, // #090909 at 40%
-                  AppColors.splashTop, // #3F0306 at 100%
-                ],
-                stops: [0.4, 1.0],
-              ),
+              gradient: AppColors.backgroundGradient,
             ),
           ),
           // Top shine blur

@@ -1,156 +1,164 @@
 import 'package:flutter/material.dart';
 
-/// NodeLabs Case - Güncellenmiş renk paleti
+/// NodeLabs Case - Design System Colors
+/// Verilen renk paleti ve gradient'lere göre düzenlenmiş
 class AppColors {
   AppColors._();
 
-  // Brand Colors
-  static const Color primary = Color(0xFFE50914); // Brand Primary
-  static const Color primaryDark = Color(0xFF6F060B); // Brand Primary Dark
-  static const Color secondary = Color(0xFF5949E6); // Brand Secondary
+  // 🎨 BRAND COLORS
+  /// Primary brand color
+  static const Color primary = Color(0xFFE50914); // #E50914
+  /// Primary dark brand color
+  static const Color primaryDark = Color(0xFF6F060B); // #6F060B
+  /// Secondary brand color
+  static const Color secondary = Color(0xFF5949E6); // #5949E6
 
-  // White Tones (Opacity based)
-  static const Color white90 = Color(0xE6FFFFFF); // 90%
-  static const Color white80 = Color(0xCCFFFFFF); // 80%
-  static const Color white70 = Color(0xB3FFFFFF); // 70%
-  static const Color white60 = Color(0x99FFFFFF); // 60%
-  static const Color white50 = Color(0x80FFFFFF); // 50%
-  static const Color white40 = Color(0x66FFFFFF); // 40%
-  static const Color white30 = Color(0x4DFFFFFF); // 30%
-  static const Color white20 = Color(0x33FFFFFF); // 20%
-  static const Color white10 = Color(0x1AFFFFFF); // 10%
-  static const Color white5 = Color(0x0DFFFFFF); // 5%
+  // 🤍 WHITE TONES (Opacity variations)
+  /// White with 90% opacity
+  static const Color white90 = Color(0xE6FFFFFF); // 90% #FFFFFF
+  /// White with 80% opacity
+  static const Color white80 = Color(0xCCFFFFFF); // 80% #FFFFFF
+  /// White with 70% opacity
+  static const Color white70 = Color(0xB3FFFFFF); // 70% #FFFFFF
+  /// White with 60% opacity
+  static const Color white60 = Color(0x99FFFFFF); // 60% #FFFFFF
+  /// White with 50% opacity
+  static const Color white50 = Color(0x80FFFFFF); // 50% #FFFFFF
+  /// White with 40% opacity
+  static const Color white40 = Color(0x66FFFFFF); // 40% #FFFFFF
+  /// White with 30% opacity
+  static const Color white30 = Color(0x4DFFFFFF); // 30% #FFFFFF
+  /// White with 20% opacity
+  static const Color white20 = Color(0x33FFFFFF); // 20% #FFFFFF
+  /// White with 10% opacity
+  static const Color white10 = Color(0x1AFFFFFF); // 10% #FFFFFF
+  /// White with 5% opacity
+  static const Color white5 = Color(0x0DFFFFFF); // 5% #FFFFFF
 
-  // Alert & Status Colors
-  static const Color success = Color(0xFF00C247); // Success
-  static const Color info = Color(0xFF004CE8); // Info
-  static const Color warning = Color(0xFFFFBE16); // Warning
-  static const Color error = Color(0xFFF47171); // Error
+  // 🚨 ALERT & STATUS COLORS
+  /// Success color for positive actions
+  static const Color success = Color(0xFF00C247); // #00C247
+  /// Info color for informational messages
+  static const Color info = Color(0xFF004CE8); // #004CE8
+  /// Warning color for warning messages
+  static const Color warning = Color(0xFFFFBE16); // #FFBE16
+  /// Error color for error messages
+  static const Color error = Color(0xFFF47171); // #F47171
 
-  // Others
-  static const Color white = Color(0xFFFFFFFF); // White
-  static const Color black = Color(0xFF000000); // Black
-  static const Color grey = Color(0xFF9E9E9E); // Grey
+  // 🔘 OTHERS
+  /// Pure white
+  static const Color white = Color(0xFFFFFFFF); // #FFFFFF
+  /// Pure black
+  static const Color black = Color(0xFF000000); // #000000
 
-  // Background Colors
-  static const Color background = Color(0xFF000000);
-  static const Color backgroundDark = Color(0xFF000000);
-  static const Color backgroundSecondary = Color(0xFF0A0A0A);
+  // 📱 COMMON UI COLORS (derived from design system)
+  /// Main background color (from gradient base)
+  static const Color background = Color(0xFF090909); // #090909
+  /// Dark background color
+  static const Color backgroundDark = Color(0xFF000000); // #000000
+  /// Surface color for cards and containers
   static const Color surface = Color(0xFF1A1A1A);
-  static const Color surfaceDark = Color(0xFF1A1A1A);
-  static const Color surfaceSecondary = Color(0xFF2A2A2A);
 
-  // Text Colors
-  static const Color textPrimary = Color(0xFFFFFFFF);
-  static const Color textSecondary = Color(0xFFB3B3B3);
-  static const Color textTertiary = Color(0xFF808080);
-  static const Color textDisabled = Color(0xFF4D4D4D);
+  /// Dark surface color
+  static const Color surfaceDark = Color(0xFF0F0F0F);
 
-  // Button Colors
-  static const Color buttonPrimary = Color(0xFFE50914);
-  static const Color buttonSecondary = Color(0xFF2A2A2A);
-  static const Color buttonTertiary = Color(0xFF000000);
+  /// Border color
+  static const Color border = Color(0xFF333333);
+
+  /// Grey color
+  static const Color grey = Color(0xFF9E9E9E);
+
+  // 🔘 BUTTON COLORS
+  /// Disabled button color
   static const Color buttonDisabled = Color(0xFF4D4D4D);
 
-  // Border Colors
-  static const Color border = Color(0xFF333333);
-  static const Color borderFocused = Color(0xFFE50914);
-  static const Color borderError = Color(0xFFF47171);
+  // 🌅 SPLASH COLORS
+  /// Splash bottom color
+  static const Color splashBottom = Color(0xFF090909); // #090909
+  /// Splash top color
+  static const Color splashTop = Color(0xFF3F0306); // #3F0306
 
-  // Card Colors
-  static const Color cardBackground = Color(0xFF1A1A1A);
-  static const Color cardBorder = Color(0xFF333333);
+  // 📝 TEXT COLORS (using white tones)
+  /// Primary text color
+  static const Color textPrimary = white; // #FFFFFF
+  /// Secondary text color
+  static const Color textSecondary = white60; // 60% white
+  /// Tertiary text color
+  static const Color textTertiary = white40; // 40% white
+  /// Disabled text color
+  static const Color textDisabled = white30; // 30% white
 
-  // Favorite/Like Colors
-  static const Color favorite = Color(0xFFE50914);
-  static const Color favoriteInactive = Color(0xFF4D4D4D);
+  // 🔴 GRADIENTS
 
-  // Bottom Sheet Colors
-  static const Color bottomSheetBackground = Color(0xFF1A1A1A);
-  static const Color bottomSheetHandle = Color(0xFF4D4D4D);
-
-  // Navigation Colors
-  static const Color navBarBackground = Color(0xFF000000);
-  static const Color navBarActive = Color(0xFFE50914);
-  static const Color navBarInactive = Color(0xFF808080);
-
-  // Splash Screen
-  static const Color splashBottom = Color(0xFF090909);
-  static const Color splashTop = Color(0xFF3F0306);
-
-  // Utility Colors
-  static const Color transparent = Colors.transparent;
-  static const Color shadow = Color(0x29000000);
-
-  // Figma UI Colors (additional)
-  static const Color black5 = Color(0x0D000000); // #0000000D (%5 opak)
-  static const Color darkGray = Color(0xFF090909); // #090909
-
-  // App Background Gradient
-  static const LinearGradient appBackgroundGradient = LinearGradient(
+  /// Background gradient: linear-gradient(0deg, #090909 40%, #3F0306 100%)
+  static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.bottomCenter,
     end: Alignment.topCenter,
-    colors: [
-      splashBottom, // #090909
-      splashTop, // #3F0306
-    ],
     stops: [0.4, 1.0],
+    colors: [
+      Color(0xFF090909), // #090909 at 40%
+      Color(0xFF3F0306), // #3F0306 at 100%
+    ],
   );
 
-  // Popular Card Gradient
-  static const LinearGradient popularCardGradient = LinearGradient(
-    begin: Alignment(0.2644, 0.1522),
-    end: Alignment(1.0, 1.0),
+  /// Popular Card gradient: radial-gradient(144.56% 76.1% at 26.44% 15.22%, #5949E6 0%, #E50914 100%)
+  static const RadialGradient popularCardGradient = RadialGradient(
+    center: Alignment(-0.4712, -0.6956), // 26.44% x, 15.22% y
+    radius: 1.0, // 144.56% coverage
     colors: [
-      secondary, // #5949E6
-      primary, // #E50914
+      secondary, // #5949E6 at 0%
+      primary, // #E50914 at 100%
     ],
     stops: [0.0, 1.0],
   );
 
-  // Normal Card Gradient
-  static const LinearGradient normalCardGradient = LinearGradient(
-    begin: Alignment(0.2644, 0.1522),
-    end: Alignment(1.0, 1.0),
+  /// Normal Card gradient: radial-gradient(144.56% 76.1% at 26.44% 15.22%, #6F060B 0%, #E50914 100%)
+  static const RadialGradient normalCardGradient = RadialGradient(
+    center: Alignment(-0.4712, -0.6956), // 26.44% x, 15.22% y
+    radius: 1.0, // 144.56% coverage
     colors: [
-      primaryDark, // #6F060B
-      primary, // #E50914
+      primaryDark, // #6F060B at 0%
+      primary, // #E50914 at 100%
     ],
     stops: [0.0, 1.0],
   );
 
-  // Active Nav Gradient
-  static const LinearGradient activeNavGradient = LinearGradient(
-    begin: Alignment(0.2644, 0.1522),
-    end: Alignment(1.0, 1.0),
+  /// Active Navigation gradient: radial-gradient(144.56% 76.1% at 26.44% 15.22%, #6F060B 0%, #E50914 100%)
+  static const RadialGradient activeNavGradient = RadialGradient(
+    center: Alignment(-0.4712, -0.6956), // 26.44% x, 15.22% y
+    radius: 1.0, // 144.56% coverage
     colors: [
-      primaryDark, // #6F060B
-      primary, // #E50914
+      primaryDark, // #6F060B at 0%
+      primary, // #E50914 at 100%
     ],
     stops: [0.0, 1.0],
   );
 
-  // Figma Gradients
+  // 🔗 LEGACY ALIASES (for backward compatibility)
+  /// App background gradient (same as backgroundGradient)
+  static const LinearGradient appBackgroundGradient = backgroundGradient;
 
-  // Navbar Bottom Gradient (linear-gradient(180deg, rgba(9, 9, 9, 0) 0%, #090909 29%))
+  /// Button radial gradient (same as activeNavGradient)
+  static const RadialGradient buttonRadialGradient = activeNavGradient;
+
+  /// Navbar bottom gradient for fade effect
   static const LinearGradient navbarBottomGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     stops: [0.0, 0.29],
     colors: [
-      Color(0x00090909), // rgba(9, 9, 9, 0) - şeffaf
-      Color(0xFF090909), // #090909 - %29'da koyu
+      Color(0x00090909), // Transparent
+      Color(0xFF090909), // #090909
     ],
   );
 
-  // Button Radial Gradient (radial-gradient(58.74% 83.33% at 50% 16.67%, #E50914 0%, #7F050B 100%))
-  static const RadialGradient buttonRadialGradient = RadialGradient(
-    center: Alignment(0.0, -0.6667), // 50% x, 16.67% y pozisyonu
-    radius: 0.83, // %83.33 yarıçap
-    colors: [
-      Color(0xFFE50914), // #E50914 merkezde
-      Color(0xFF7F050B), // #7F050B kenarlarda
-    ],
-    stops: [0.0, 1.0],
-  );
+  // 🎯 UTILITY COLORS
+  /// Transparent color
+  static const Color transparent = Colors.transparent;
+
+  /// Shadow color
+  static const Color shadow = Color(0x29000000);
+
+  /// Focus color (same as primary)
+  static const Color focus = primary;
 }

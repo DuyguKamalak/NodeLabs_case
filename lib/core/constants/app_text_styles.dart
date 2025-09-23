@@ -3,310 +3,332 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 import '../utils/responsive_utils.dart';
 
-/// Uygulama tipografi stilleri - Instrument Sans
+/// NodeLabs Case - Typography System
+/// Instrument Sans font family with complete weight and size variations
+/// Based on provided design system specifications
 class AppTextStyles {
   AppTextStyles._();
 
-  // Base Font Family
+  // 📝 BASE FONT FAMILY
+  /// Primary font family: Instrument Sans
   static String get fontFamily => GoogleFonts.instrumentSans().fontFamily!;
 
-  // Responsive Heading Styles
+  // 📖 HEADING STYLES
+
+  /// Heading 1 - Bold / 48px
   static TextStyle h1(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 48),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
+  /// Heading 2 - Bold / 40px
   static TextStyle h2(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 40),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
+  /// Heading 3 - Bold / 32px
   static TextStyle h3(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 32),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
+  /// Heading 4 - Bold / 24px
   static TextStyle h4(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 24),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
+  /// Heading 5 - Bold / 20px
   static TextStyle h5(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 20),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
+  /// Heading 6 - Bold / 18px
   static TextStyle h6(BuildContext context) => GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.2,
+        letterSpacing: 0,
       );
 
-  // Responsive Body XLarge Styles
+  // 📄 BODY XLARGE STYLES (18px)
+
+  /// Body XLarge - Bold / 18px
   static TextStyle bodyXLargeBold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XLarge - Semibold / 18px
   static TextStyle bodyXLargeSemibold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XLarge - Medium / 18px
   static TextStyle bodyXLargeMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XLarge - Regular / 18px
   static TextStyle bodyXLarge(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
-  // Responsive Body Large Styles
+  // 📄 BODY LARGE STYLES (16px)
+
+  /// Body Large - Bold / 16px
   static TextStyle bodyLargeBold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Large - Semibold / 16px
   static TextStyle bodyLargeSemibold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Large - Medium / 16px
   static TextStyle bodyLargeMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Large - Regular / 16px
   static TextStyle bodyLarge(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
-  // Responsive Body Normal/Medium Styles
+  // 📄 BODY MEDIUM STYLES (14px)
+
+  /// Body Medium - Bold / 14px
   static TextStyle bodyMediumBold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Medium - Semibold / 14px
   static TextStyle bodyMediumSemibold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Medium - Medium / 14px
   static TextStyle bodyMediumMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Medium - Regular / 14px
   static TextStyle bodyMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
-  // Responsive Body Small Styles
+  // 📄 BODY SMALL STYLES (12px)
+
+  /// Body Small - Bold / 12px
   static TextStyle bodySmallBold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Small - Semibold / 12px
   static TextStyle bodySmallSemibold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Small - Medium / 12px
   static TextStyle bodySmallMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body Small - Regular / 12px
   static TextStyle bodySmall(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
-  // Responsive Body XSmall Styles
+  // 📄 BODY XSMALL STYLES (10px)
+
+  /// Body XSmall - Bold / 10px
   static TextStyle bodyXSmallBold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w700, // Bold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XSmall - Semibold / 10px
   static TextStyle bodyXSmallSemibold(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w600, // Semibold
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XSmall - Medium / 10px
   static TextStyle bodyXSmallMedium(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w500, // Medium
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
+  /// Body XSmall - Regular / 10px
   static TextStyle bodyXSmall(BuildContext context) =>
       GoogleFonts.instrumentSans(
         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
         fontWeight: FontWeight.w400, // Regular
         color: AppColors.textPrimary,
         height: 1.4,
+        letterSpacing: 0,
       );
 
-  // Legacy styles for backward compatibility - now require context
+  // 🔗 LEGACY ALIASES (for backward compatibility)
+  /// Default body text style (bodyMedium)
   static TextStyle body(BuildContext context) => bodyMedium(context);
+
+  /// Caption text style (bodyXSmall)
   static TextStyle caption(BuildContext context) => bodyXSmall(context);
 
-  // Responsive Button Styles
+  // 🔘 SPECIALIZED STYLES
+
+  /// Button text styles
   static TextStyle buttonLarge(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
-        fontWeight: FontWeight.w600,
-        color: AppColors.white,
-        height: 1.2,
-      );
+      bodyLargeSemibold(context).copyWith(color: AppColors.white);
 
   static TextStyle buttonMedium(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-        fontWeight: FontWeight.w600,
-        color: AppColors.white,
-        height: 1.2,
-      );
+      bodyMediumSemibold(context).copyWith(color: AppColors.white);
 
   static TextStyle buttonSmall(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w600,
-        color: AppColors.white,
-        height: 1.2,
-      );
+      bodySmallSemibold(context).copyWith(color: AppColors.white);
 
-  // Responsive Link Styles
-  static TextStyle link(BuildContext context) => GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-        fontWeight: FontWeight.w500,
+  /// Link style with underline
+  static TextStyle link(BuildContext context) =>
+      bodyMediumMedium(context).copyWith(
         color: AppColors.primary,
-        height: 1.2,
         decoration: TextDecoration.underline,
       );
 
-  // Responsive Message Styles
-  static TextStyle error(BuildContext context) => GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w400,
+  /// Alert message styles
+  static TextStyle error(BuildContext context) => bodySmall(context).copyWith(
         color: AppColors.error,
-        height: 1.2,
       );
 
-  static TextStyle success(BuildContext context) => GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w400,
+  static TextStyle success(BuildContext context) => bodySmall(context).copyWith(
         color: AppColors.success,
-        height: 1.2,
       );
 
-  static TextStyle warning(BuildContext context) => GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w400,
+  static TextStyle warning(BuildContext context) => bodySmall(context).copyWith(
         color: AppColors.warning,
-        height: 1.2,
       );
 
-  static TextStyle info(BuildContext context) => GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w400,
+  static TextStyle info(BuildContext context) => bodySmall(context).copyWith(
         color: AppColors.info,
-        height: 1.2,
       );
 
-  // Responsive Label Styles
+  /// Label styles
   static TextStyle labelLarge(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-        fontWeight: FontWeight.w500,
-        color: AppColors.textPrimary,
-        height: 1.2,
-      );
+      bodyMediumMedium(context);
 
   static TextStyle labelMedium(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-        fontWeight: FontWeight.w500,
-        color: AppColors.textPrimary,
-        height: 1.2,
-      );
+      bodySmallMedium(context);
 
   static TextStyle labelSmall(BuildContext context) =>
-      GoogleFonts.instrumentSans(
-        fontSize: ResponsiveUtils.getResponsiveFontSize(context, 10),
-        fontWeight: FontWeight.w500,
-        color: AppColors.textPrimary,
-        height: 1.2,
-      );
+      bodyXSmallMedium(context);
 }

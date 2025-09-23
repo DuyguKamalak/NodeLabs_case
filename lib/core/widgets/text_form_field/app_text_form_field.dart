@@ -85,7 +85,19 @@ class AppTextFormField extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
             prefixIcon: prefixIcon,
+            prefixIconConstraints: BoxConstraints(
+              minWidth: 50.w,
+              minHeight: 28.h,
+              maxWidth: 50.w,
+              maxHeight: 28.h,
+            ),
             suffixIcon: suffixIcon,
+            suffixIconConstraints: BoxConstraints(
+              minWidth: 50.w,
+              minHeight: 28.h,
+              maxWidth: 50.w,
+              maxHeight: 28.h,
+            ),
             filled: true,
             fillColor: AppColors.surface,
             border: OutlineInputBorder(
@@ -123,6 +135,7 @@ class AppTextFormField extends StatelessWidget {
                 width: 2,
               ),
             ),
+            isDense: true,
             contentPadding: EdgeInsets.symmetric(
               horizontal: 16.w,
               vertical: 16.h,

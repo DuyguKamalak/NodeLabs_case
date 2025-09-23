@@ -21,7 +21,7 @@ class ResponsiveUtils {
   /// Cihaz tipini döndürür
   static ResponsiveDeviceType getDeviceType(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    
+
     if (width < _mobileBreakpoint) {
       return ResponsiveDeviceType.mobile;
     } else if (width < _tabletBreakpoint) {
@@ -46,21 +46,21 @@ class ResponsiveUtils {
   /// Desktop kontrolü
   static bool isDesktop(BuildContext context) {
     final deviceType = getDeviceType(context);
-    return deviceType == ResponsiveDeviceType.desktop || 
-           deviceType == ResponsiveDeviceType.largeDesktop;
+    return deviceType == ResponsiveDeviceType.desktop ||
+        deviceType == ResponsiveDeviceType.largeDesktop;
   }
 
   /// Mobil veya tablet kontrolü
   static bool isMobileOrTablet(BuildContext context) {
     final deviceType = getDeviceType(context);
-    return deviceType == ResponsiveDeviceType.mobile || 
-           deviceType == ResponsiveDeviceType.tablet;
+    return deviceType == ResponsiveDeviceType.mobile ||
+        deviceType == ResponsiveDeviceType.tablet;
   }
 
   /// Ekran genişliğine göre responsive padding
   static EdgeInsets getResponsivePadding(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h);
@@ -76,7 +76,7 @@ class ResponsiveUtils {
   /// Sayfa padding'i
   static EdgeInsets getPagePadding(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return EdgeInsets.symmetric(horizontal: 20.w);
@@ -92,7 +92,7 @@ class ResponsiveUtils {
   /// Grid sütun sayısı
   static int getGridColumns(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return 2;
@@ -108,7 +108,7 @@ class ResponsiveUtils {
   /// Maksimum genişlik sınırı
   static double getMaxContentWidth(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return double.infinity;
@@ -122,9 +122,10 @@ class ResponsiveUtils {
   }
 
   /// Responsive font size
-  static double getResponsiveFontSize(BuildContext context, double baseFontSize) {
+  static double getResponsiveFontSize(
+      BuildContext context, double baseFontSize) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return baseFontSize.sp;
@@ -138,9 +139,10 @@ class ResponsiveUtils {
   }
 
   /// Responsive icon size
-  static double getResponsiveIconSize(BuildContext context, double baseIconSize) {
+  static double getResponsiveIconSize(
+      BuildContext context, double baseIconSize) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return baseIconSize.w;
@@ -154,9 +156,10 @@ class ResponsiveUtils {
   }
 
   /// Responsive border radius
-  static double getResponsiveBorderRadius(BuildContext context, double baseRadius) {
+  static double getResponsiveBorderRadius(
+      BuildContext context, double baseRadius) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return baseRadius.r;
@@ -172,7 +175,7 @@ class ResponsiveUtils {
   /// Bottom navigation yüksekliği
   static double getBottomNavHeight(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return 80.h;
@@ -188,7 +191,7 @@ class ResponsiveUtils {
   /// App bar yüksekliği
   static double getAppBarHeight(BuildContext context) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return 56.h;
@@ -204,7 +207,7 @@ class ResponsiveUtils {
   /// Card yüksekliği
   static double getCardHeight(BuildContext context, double baseHeight) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return baseHeight.h;
@@ -220,7 +223,7 @@ class ResponsiveUtils {
   /// Responsive spacing
   static double getResponsiveSpacing(BuildContext context, double baseSpacing) {
     final deviceType = getDeviceType(context);
-    
+
     switch (deviceType) {
       case ResponsiveDeviceType.mobile:
         return baseSpacing.h;
@@ -249,7 +252,9 @@ class ResponsiveUtils {
 
   /// Responsive LayoutBuilder wrapper
   static Widget responsiveBuilder({
-    required Widget Function(BuildContext context, ResponsiveDeviceType deviceType) builder,
+    required Widget Function(
+            BuildContext context, ResponsiveDeviceType deviceType)
+        builder,
   }) {
     return LayoutBuilder(
       builder: (context, constraints) {
