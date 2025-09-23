@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/constants/app_colors.dart';
+import 'upload_photo_page.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/common/app_background.dart';
 import '../../movies/data/models/movie_model.dart';
@@ -331,33 +332,43 @@ class _ProfilePageState extends State<ProfilePage> {
     final isDesktop = ResponsiveUtils.isDesktop(context);
     final buttonHeight = ResponsiveUtils.isMobile(context) ? 37.h : 42.h;
 
-    return Container(
-      constraints: BoxConstraints(
-        minWidth: isDesktop ? 120.w : 100.w,
-        maxWidth: isDesktop ? 160.w : 140.w,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const UploadPhotoPage()),
+        );
+      },
+      borderRadius: BorderRadius.circular(
+        ResponsiveUtils.getResponsiveBorderRadius(context, 8),
       ),
-      height: buttonHeight,
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveUtils.getResponsiveSpacing(context, 16),
-        vertical: ResponsiveUtils.getResponsiveSpacing(context, 10),
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF).withOpacity(0.05),
-        borderRadius: BorderRadius.circular(
-          ResponsiveUtils.getResponsiveBorderRadius(context, 8),
+      child: Container(
+        constraints: BoxConstraints(
+          minWidth: isDesktop ? 120.w : 100.w,
+          maxWidth: isDesktop ? 160.w : 140.w,
         ),
-      ),
-      child: Center(
-        child: Text(
-          'Fotoğraf Ekle',
-          style: TextStyle(
-            fontFamily: 'Instrument Sans',
-            fontWeight: FontWeight.w500,
-            fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-            color: const Color(0xFFFFFFFF).withOpacity(0.8),
+        height: buttonHeight,
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.getResponsiveSpacing(context, 16),
+          vertical: ResponsiveUtils.getResponsiveSpacing(context, 10),
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFFFFF).withOpacity(0.05),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.getResponsiveBorderRadius(context, 8),
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+        ),
+        child: Center(
+          child: Text(
+            'Fotoğraf Ekle',
+            style: TextStyle(
+              fontFamily: 'Instrument Sans',
+              fontWeight: FontWeight.w500,
+              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
+              color: const Color(0xFFFFFFFF).withOpacity(0.8),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ),
     );
