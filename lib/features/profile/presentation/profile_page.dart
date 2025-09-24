@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/constants/app_colors.dart';
 import 'upload_photo_page.dart';
+import 'limited_offer_bottom_sheet.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/common/app_background.dart';
 import '../../movies/data/models/movie_model.dart';
@@ -227,50 +228,58 @@ class _ProfilePageState extends State<ProfilePage> {
     final isDesktop = ResponsiveUtils.isDesktop(context);
     final buttonHeight = ResponsiveUtils.isMobile(context) ? 32.h : 36.h;
 
-    return Container(
-      constraints: BoxConstraints(
-        minWidth: isDesktop ? 100.w : 80.w,
-        maxWidth: isDesktop ? 160.w : 140.w,
+    return InkWell(
+      onTap: () async {
+        await LimitedOfferBottomSheet.show(context);
+      },
+      borderRadius: BorderRadius.circular(
+        ResponsiveUtils.getResponsiveBorderRadius(context, 20),
       ),
-      height: buttonHeight,
-      padding: EdgeInsets.symmetric(
-        horizontal: ResponsiveUtils.getResponsiveSpacing(context, 12),
-        vertical: ResponsiveUtils.getResponsiveSpacing(context, 8),
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF3B30),
-        borderRadius: BorderRadius.circular(
-          ResponsiveUtils.getResponsiveBorderRadius(context, 20),
+      child: Container(
+        constraints: BoxConstraints(
+          minWidth: isDesktop ? 100.w : 80.w,
+          maxWidth: isDesktop ? 160.w : 140.w,
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/icons/icon/Component/Components/Gem.svg',
-            width: ResponsiveUtils.getResponsiveIconSize(context, 16),
-            height: ResponsiveUtils.getResponsiveIconSize(context, 16),
-            colorFilter: const ColorFilter.mode(
-              Colors.white,
-              BlendMode.srcIn,
-            ),
+        height: buttonHeight,
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.getResponsiveSpacing(context, 12),
+          vertical: ResponsiveUtils.getResponsiveSpacing(context, 8),
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFF3B30),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.getResponsiveBorderRadius(context, 20),
           ),
-          SizedBox(width: ResponsiveUtils.getResponsiveSpacing(context, 4)),
-          Flexible(
-            child: Text(
-              'Sınırlı Teklif',
-              style: TextStyle(
-                fontFamily: 'Instrument Sans',
-                fontWeight: FontWeight.w600,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-                color: Colors.white,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/icon/Component/Components/Gem.svg',
+              width: ResponsiveUtils.getResponsiveIconSize(context, 16),
+              height: ResponsiveUtils.getResponsiveIconSize(context, 16),
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
-          ),
-        ],
+            SizedBox(width: ResponsiveUtils.getResponsiveSpacing(context, 4)),
+            Flexible(
+              child: Text(
+                'Sınırlı Teklif',
+                style: TextStyle(
+                  fontFamily: 'Instrument Sans',
+                  fontWeight: FontWeight.w600,
+                  fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
+                  color: Colors.white,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

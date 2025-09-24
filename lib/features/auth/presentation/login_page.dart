@@ -470,9 +470,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             onPressed: _navigateToRegister,
             child: Text(
               'Kayıt Ol',
-              style: AppTextStyles.bodyMedium(context).copyWith(
+              style: AppTextStyles.bodyMediumSemibold(context).copyWith(
                 color: AppColors.white,
-                fontWeight: FontWeight.w600,
+                fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
               ),
             ),
           ),

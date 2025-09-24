@@ -504,8 +504,8 @@ class _RegisterPageState extends State<RegisterPage> {
           onPressed: _navigateToLogin,
           child: Text(
             'Giriş Yap',
-            style: AppTextStyles.link(context).copyWith(
-              color: AppColors.primary,
+            style: AppTextStyles.bodyMediumSemibold(context).copyWith(
+              color: const Color.fromARGB(255, 255, 255, 255),
               fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
             ),
           ),

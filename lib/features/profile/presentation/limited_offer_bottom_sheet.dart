@@ -1,0 +1,356 @@
+import 'dart:ui' as ui show ImageFilter;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_text_styles.dart';
+import '../../../core/utils/responsive_utils.dart';
+
+class LimitedOfferBottomSheet extends StatefulWidget {
+  const LimitedOfferBottomSheet({super.key});
+
+  static Future<T?> show<T>(BuildContext context) {
+    return showModalBottomSheet<T>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      useRootNavigator: true,
+      backgroundColor: Colors.transparent,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => const LimitedOfferBottomSheet(),
+    );
+  }
+
+  @override
+  State<LimitedOfferBottomSheet> createState() =>
+      _LimitedOfferBottomSheetState();
+}
+
+class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
+  int selectedIndex = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screen = MediaQuery.of(context).size;
+    final double maxHeight =
+        (screen.height * 0.83).clamp(0.0, 620.h.toDouble());
+    final EdgeInsets contentPadding = EdgeInsets.symmetric(
+      horizontal: ResponsiveUtils.getResponsiveSpacing(context, 24),
+      vertical: ResponsiveUtils.getResponsiveSpacing(context, 32),
+    );
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: maxHeight),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: AppColors.backgroundGradient,
+              ),
+            ),
+          ),
+          Padding(
+            padding: contentPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Sınırlı Teklif',
+                          style: AppTextStyles.h4(context),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 8)),
+                        Text(
+                          'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!',
+                          style: AppTextStyles.bodyMedium(context)
+                              .copyWith(color: AppColors.white90),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 16)),
+                        _BonusesPanel(),
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 16)),
+                        Text(
+                          'Kilidi açmak için bir jeton paketi seçin',
+                          style: AppTextStyles.bodyLargeSemibold(context),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                            height: ResponsiveUtils.getResponsiveSpacing(
+                                context, 12)),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: ResponsiveUtils.getResponsiveSpacing(
+                                context, 8),
+                          ),
+                          child: _CoinOptions(
+                            selectedIndex: selectedIndex,
+                            onChanged: (i) => setState(() => selectedIndex = i),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    height: ResponsiveUtils.getResponsiveSpacing(context, 12)),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56.h,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r)),
+                    ),
+                    child: Text(
+                      'Tüm Jetonları Gör',
+                      style: AppTextStyles.buttonLarge(context),
+                    ),
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom),
+              ],
+            ),
+          ),
+          Positioned(
+            right: ResponsiveUtils.getResponsiveSpacing(context, 24),
+            top: ResponsiveUtils.getResponsiveSpacing(context, 16),
+            child: _BlurCircleButton(
+              onTap: () => Navigator.of(context).pop(),
+              child: const Icon(Icons.close, size: 18, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BlurCircleButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final Widget child;
+  const _BlurCircleButton({required this.onTap, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(900),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(900),
+        child: Container(
+          width: 36.w,
+          height: 36.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.white10,
+            borderRadius: BorderRadius.circular(900),
+            border: Border.all(color: AppColors.white50, width: 1),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _BonusesPanel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final EdgeInsets padding = EdgeInsets.all(16.w);
+    return Container(
+      width: double.infinity,
+      padding: padding,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: AppColors.white20, width: 1),
+        gradient: const RadialGradient(
+          center: Alignment(0.1, 0),
+          radius: 1.2,
+          colors: [Color(0x1AFFFFFF), Color(0x08FFFFFF)],
+          stops: [0.0, 1.0],
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('Alacağınız Bonuslar',
+              style: AppTextStyles.bodyLargeSemibold(context)
+                  .copyWith(color: AppColors.white),
+              textAlign: TextAlign.center),
+          SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 12)),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final double gap = 8.w;
+              final double usable = constraints.maxWidth - gap * 3;
+              final double badgeSize = (usable / 4).clamp(44.0, 56.0);
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _BonusBadge(
+                    size: badgeSize,
+                    label: 'Premium Hesap',
+                    asset: 'assets/images/iconlyPro.svg',
+                  ),
+                  _BonusBadge(
+                    size: badgeSize,
+                    label: 'Daha Fazla Eşleşme',
+                    asset: 'assets/images/iconlyMatch.svg',
+                  ),
+                  _BonusBadge(
+                    size: badgeSize,
+                    label: 'Öne Çıkarma',
+                    asset: 'assets/images/iconlyHighlight.svg',
+                  ),
+                  _BonusBadge(
+                    size: badgeSize,
+                    label: 'Daha Fazla Beğeni',
+                    asset: 'assets/images/iconlyLikes.svg',
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BonusBadge extends StatelessWidget {
+  final double size;
+  final String label;
+  final String asset;
+  const _BonusBadge({
+    required this.size,
+    required this.label,
+    required this.asset,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const double sigma = 4.5; // glow blur gücü
+    const double ringStart = 0.74; // halkanın başlangıç noktası
+
+    return SizedBox(
+      width: size,
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // Ana daire
+              Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryDark,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.white50, width: 1),
+                ),
+              ),
+
+              // Inset glow efekti
+              ClipOval(
+                child: ImageFiltered(
+                  imageFilter: ui.ImageFilter.blur(
+                    sigmaX: sigma,
+                    sigmaY: sigma,
+                  ),
+                  child: Container(
+                    width: size,
+                    height: size,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        center: Alignment(0, 0),
+                        radius: 0.95,
+                        colors: [
+                          Colors.transparent,
+                          Colors.transparent,
+                          Color(0x66FFFFFF), // beyaz glow
+                          Colors.transparent,
+                        ],
+                        stops: [0.0, ringStart, 0.92, 1.0],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // SVG ikonu
+              SvgPicture.asset(
+                asset,
+                width: size * 0.56,
+                height: size * 0.56,
+                fit: BoxFit.contain,
+              ),
+            ],
+          ),
+          SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 16)),
+          Text(
+            label,
+            style: AppTextStyles.bodyXSmallSemibold(context)
+                .copyWith(color: AppColors.white),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CoinOptions extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
+  const _CoinOptions({required this.selectedIndex, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(3, (index) {
+        final bool isSelected = index == selectedIndex;
+        final String asset = isSelected
+            ? 'assets/icons/coin_options/State=Selected.svg'
+            : 'assets/icons/coin_options/State=Default.svg';
+        return Expanded(
+          child: GestureDetector(
+            onTap: () => onChanged(index),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              child: AspectRatio(
+                aspectRatio: 0.52,
+                child: SvgPicture.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
