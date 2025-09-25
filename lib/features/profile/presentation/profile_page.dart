@@ -38,13 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _hydrateUserHeader() async {
-    // 1) Cache’ten kullanıcıya özel foto
     final cachedUrl = await AuthService().getPhotoUrlForCurrentUser();
     if (cachedUrl != null && cachedUrl.isNotEmpty && mounted) {
       setState(() => _photoUrl = cachedUrl);
     }
 
-    // 2) API’den profil – ad ve id + foto (varsa güncelle)
     try {
       final token = await ApiClient.instance.getToken();
       if (token == null) return;
@@ -237,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
 
-          // Profil satırı: FOTO + (Ad & ID) + Fotoğraf Ekle
+          // Profil satırı
           Container(
             width: double.infinity,
             height: profileSectionHeight,
@@ -248,7 +246,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 _buildProfilePhoto(context),
                 SizedBox(
                     width: ResponsiveUtils.getResponsiveSpacing(context, 12)),
-                // 1) Kullanıcı adı & ID (API’den gelen)
                 Expanded(child: _buildUserInfo(context)),
                 SizedBox(
                     width: ResponsiveUtils.getResponsiveSpacing(context, 8)),
@@ -319,9 +316,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: const Icon(Icons.person, color: Colors.white),
                 ),
               )
-            : Image.asset(
-                'assets/images/profil_photo.jpg',
-                fit: BoxFit.cover,
+            : Container(
+                color: Colors.white10,
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  'assets/icons/icon/Component/Components/Profile.svg',
+                  width: 28.w,
+                  height: 28.w,
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
               ),
       ),
     );
@@ -470,18 +474,12 @@ class _MovieThumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Yapım şirketi: önce production/studio, yoksa genres'in ilk elemanı (null-safe)
     final company = (() {
       try {
-        // production / studio gibi alanlar varsa kullan
         final dyn = (movie as dynamic);
         final p = dyn.production ?? dyn.studio;
         if (p is String && p.trim().isNotEmpty) return p;
-      } catch (_) {
-        // model bu alanları içermeyebilir, sorun değil
-      }
-
-      // genres null olabilir; güvenli kontrol
+      } catch (_) {}
       try {
         final g = (movie as dynamic).genres;
         if (g is List && g.isNotEmpty) {
@@ -490,7 +488,6 @@ class _MovieThumb extends StatelessWidget {
           if (first != null) return first.toString();
         }
       } catch (_) {}
-
       return '';
     })();
 

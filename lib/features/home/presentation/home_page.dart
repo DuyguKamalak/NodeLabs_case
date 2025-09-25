@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,11 +19,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final MovieService _movieService = MovieService();
 
   List<Movie> _movies = [];
-  int _currentIndex = 0; // ekranda gösterilen film
+  int _currentIndex = 0;
   bool _isLoading = true;
   String? _error;
 
-  /// Plot (açıklama) için “Devamını oku” aç/kapa
   bool _isPlotExpanded = false;
 
   @override
@@ -59,7 +59,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ? null
           : _movies[_currentIndex];
 
-  /// Yukarı doğru swipe ile sıradaki filme geç
   Future<void> _nextMovie() async {
     if (_movies.isEmpty) return;
 
@@ -68,24 +67,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (_currentIndex < _movies.length - 1) {
         _currentIndex++;
       } else {
-        // listenin sonuna gelindiyse yeniden çek
         _currentIndex = 0;
       }
     });
 
-    // Son 2’ye gelmişsek yeni listeyi arkadan güncelle
     if (_currentIndex >= _movies.length - 2) {
       try {
         final response = await _movieService.getMovieList();
         if (mounted) {
           setState(() {
             _movies = response.movies;
-            // mevcut index 0’a resetlenmiyor; kullanıcı devam ediyor
           });
         }
-      } catch (_) {
-        // hata durumunda sessiz geç
-      }
+      } catch (_) {}
     }
   }
 
@@ -108,7 +102,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           rating: m.rating,
           genres: m.genres,
           isFavorite: resp.isFavorite,
-          // diğer alanlar varsa ek modelinizde korunur
         );
       });
     } catch (e) {
@@ -143,7 +136,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       body: GestureDetector(
-        // yalnızca dikey yukarı atımda sonraki filme geç
         onVerticalDragEnd: (details) {
           if (details.primaryVelocity != null &&
               details.primaryVelocity! < -100) {
@@ -152,7 +144,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         },
         child: Stack(
           children: [
-            // Arka plan poster
             Positioned.fill(
               child: movie == null
                   ? Container(color: Colors.black)
@@ -165,8 +156,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Container(color: Colors.black),
                     ),
             ),
-
-            // Karanlık geçiş
             const Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -184,8 +173,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
             ),
-
-            // Alt bilgi bloğu
             Positioned(
               left: 0,
               right: 0,
@@ -203,8 +190,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
             ),
-
-            // Favori butonu
             if (movie != null)
               Builder(
                 builder: (context) {
@@ -224,6 +209,74 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     );
   }
+
+  // ===================== Yardımcılar (inline link için) =====================
+
+  String _normalizeWhitespace(String input) {
+    return input
+        .replaceAll('\u00A0', ' ')
+        .replaceAll('\u2007', ' ')
+        .replaceAll('\u202F', ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+  }
+
+  String _truncateToWordSafe(String s) {
+    final trimmed = s.trimRight();
+    final matches = RegExp(r'\s').allMatches(trimmed).toList();
+    if (matches.isNotEmpty) {
+      final last = matches.last.start;
+      if (last > 0) return trimmed.substring(0, last);
+    }
+    if (trimmed.length > 6) return trimmed.substring(0, trimmed.length - 6);
+    return trimmed;
+  }
+
+  /// Açıklamayı **iki satıra**, en sonda `linkText` ile birlikte sığdırır.
+  String _fitTextForTwoLines({
+    required String text,
+    required double maxWidth,
+    required TextStyle baseStyle,
+    required TextStyle linkStyle,
+    required String linkText,
+  }) {
+    final normalized = _normalizeWhitespace(text);
+
+    // Bir miktar güvenlik payı: ölçüm ve gerçek çizimde küçük farklar olabiliyor.
+    final safeWidth = (maxWidth - 8).clamp(0.0, maxWidth);
+
+    int low = 0, high = normalized.length, best = 0;
+
+    bool fits(int len) {
+      final base = normalized.substring(0, len).trimRight();
+      final tp = TextPainter(
+        text: TextSpan(
+          children: [
+            TextSpan(text: base, style: baseStyle),
+            const TextSpan(text: ' '),
+            TextSpan(text: linkText, style: linkStyle),
+          ],
+        ),
+        maxLines: 2,
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: safeWidth);
+      return !tp.didExceedMaxLines;
+    }
+
+    while (low <= high) {
+      final mid = (low + high) >> 1;
+      if (fits(mid)) {
+        best = mid;
+        low = mid + 1;
+      } else {
+        high = mid - 1;
+      }
+    }
+
+    return _truncateToWordSafe(normalized.substring(0, best));
+  }
+
+  // ==========================================================================
 
   Widget _buildMovieInfoSection(BuildContext context) {
     if (_isLoading) {
@@ -250,7 +303,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // 1) KIRMIZI DAİRE içinde Icon1.svg
+        // Kırmızı daire + küçük N logosu
         Container(
           width: 40,
           height: 40,
@@ -261,17 +314,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           alignment: Alignment.center,
           child: SvgPicture.asset(
             'assets/images/Icon1.svg',
-            width: 22,
-            height: 22,
+            width: 20,
+            height: 17,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
 
-        // 2) Başlık + yalnızca Plot ve "Devamını oku"
+        // Başlık + açıklama (inline link)
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Başlık
               Text(
                 movie.title,
                 maxLines: 1,
@@ -284,37 +338,65 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               const SizedBox(height: 6),
 
-              // Plot (açıklama) – rating YOK
-              AnimatedSize(
-                duration: const Duration(milliseconds: 200),
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      movie.description,
-                      maxLines: _isPlotExpanded ? 10 : 2,
-                      overflow: _isPlotExpanded
-                          ? TextOverflow.visible
-                          : TextOverflow.ellipsis,
-                      style:
-                          const TextStyle(color: Colors.white70, height: 1.2),
-                    ),
-                    const SizedBox(height: 6),
-                    GestureDetector(
-                      onTap: () =>
-                          setState(() => _isPlotExpanded = !_isPlotExpanded),
-                      child: Text(
-                        _isPlotExpanded ? 'Gizle' : 'Devamını Oku',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
+              // Açıklama: kapalıyken iki satır + SONDA link
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  const baseStyle =
+                      TextStyle(color: Colors.white70, height: 1.2);
+                  const linkStyle = TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    // underline istenmiyor
+                    decoration: TextDecoration.none,
+                  );
+                  final linkText = _isPlotExpanded ? 'Gizle' : 'Devamını Oku';
+
+                  if (_isPlotExpanded) {
+                    final full = _normalizeWhitespace(movie.description);
+                    return Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(text: full, style: baseStyle),
+                          const TextSpan(text: ' '),
+                          TextSpan(
+                            text: linkText,
+                            style: linkStyle,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => setState(() => _isPlotExpanded = false),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                    );
+                  } else {
+                    final fittedBase = _fitTextForTwoLines(
+                      text: movie.description,
+                      maxWidth: constraints.maxWidth,
+                      baseStyle: baseStyle,
+                      linkStyle: linkStyle,
+                      linkText: linkText,
+                    );
+
+                    return Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(text: fittedBase, style: baseStyle),
+                          const TextSpan(text: ' '),
+                          TextSpan(
+                            text: linkText,
+                            style: linkStyle,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => setState(() => _isPlotExpanded = true),
+                          ),
+                        ],
+                      ),
+                      maxLines: 2,
+                      // güvenlik payı koyduğumuz için ellipsis'e gerek yok
+                      overflow: TextOverflow.clip,
+                    );
+                  }
+                },
               ),
             ],
           ),
