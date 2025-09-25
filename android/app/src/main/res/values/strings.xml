@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shartflix</string>
+    
+    <!-- Facebook Configuration -->
+    <string name="facebook_app_id">805277675346793</string>
+    <string name="facebook_client_token">1c81a05eb173f614f171465b5c6041e5</string>
+    <string name="fb_login_protocol_scheme">fb805277675346793</string>
+</resources>

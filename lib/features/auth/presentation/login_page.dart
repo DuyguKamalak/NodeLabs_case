@@ -8,6 +8,7 @@ import '../../../core/utils/responsive_utils.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text_form_field/app_text_form_field.dart';
 import '../../../core/widgets/common/app_background.dart';
+import '../../../core/services/auth_service.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,12 +22,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = AuthService();
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -67,22 +70,129 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      // Login logic implemented
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Giriş başarılı!'),
-          backgroundColor: AppColors.success,
-        ),
-      );
-
-      // Navigate to main page after successful login
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted) {
-          Navigator.of(context).pushReplacementNamed('/main');
-        }
+      setState(() {
+        _isLoading = true;
       });
+
+      try {
+        await _authService.loginWithEmail(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Giriş başarılı!'),
+              backgroundColor: AppColors.success,
+            ),
+          );
+
+          // Navigate to main page after successful login
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (mounted) {
+              Navigator.of(context).pushReplacementNamed('/main');
+            }
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Giriş başarısız: ${e.toString()}'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _handleGoogleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _authService.signInWithGoogle();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Google ile giriş başarılı!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pushReplacementNamed('/main');
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Google girişi başarısız: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _handleFacebookLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _authService.signInWithFacebook();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Facebook ile giriş başarılı!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pushReplacementNamed('/main');
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Facebook girişi başarısız: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -399,8 +509,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   Widget _buildLoginButton(BuildContext context) {
     return AppButton(
-      text: 'Giriş Yap',
-      onPressed: _handleLogin,
+      text: _isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap',
+      onPressed: _isLoading ? null : _handleLogin,
       type: AppButtonType.primary,
     );
   }
@@ -415,40 +525,28 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Google.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Google girişi yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading ? null : _handleGoogleLogin,
         ),
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Apple.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Apple girişi yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading
+              ? null
+              : () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Apple girişi yakında!'),
+                      backgroundColor: AppColors.info,
+                    ),
+                  );
+                },
         ),
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Facebook.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Facebook girişi yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading ? null : _handleFacebookLogin,
         ),
       ],
     );
@@ -484,7 +582,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   Widget _buildSocialButton(
     BuildContext context, {
     required String iconPath,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
   }) {
     final buttonSize = ResponsiveUtils.getResponsiveIconSize(context, 60);
     final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 24);
@@ -496,7 +594,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         width: buttonSize,
         height: buttonSize,
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: onTap == null
+              ? AppColors.surface.withOpacity(0.5)
+              : AppColors.surface,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
             color: AppColors.border,
@@ -508,8 +608,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             iconPath,
             width: iconSize,
             height: iconSize,
-            colorFilter: const ColorFilter.mode(
-              AppColors.white,
+            colorFilter: ColorFilter.mode(
+              onTap == null
+                  ? AppColors.white.withOpacity(0.5)
+                  : AppColors.white,
               BlendMode.srcIn,
             ),
           ),

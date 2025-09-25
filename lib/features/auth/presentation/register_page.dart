@@ -7,6 +7,7 @@ import '../../../core/utils/responsive_utils.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text_form_field/app_text_form_field.dart';
 import '../../../core/widgets/common/app_background.dart';
+import '../../../core/services/auth_service.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -23,9 +24,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _authService = AuthService();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _acceptTerms = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -37,22 +40,50 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  void _handleRegister() {
+  Future<void> _handleRegister() async {
     if (_formKey.currentState!.validate() && _acceptTerms) {
-      // Register logic implemented
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Kayıt başarılı!'),
-          backgroundColor: AppColors.success,
-        ),
-      );
-
-      // Navigate to main page after successful registration
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted) {
-          Navigator.of(context).pushReplacementNamed('/main');
-        }
+      setState(() {
+        _isLoading = true;
       });
+
+      try {
+        await _authService.registerWithEmail(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          name: _firstNameController.text.trim(),
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Kayıt başarılı!'),
+              backgroundColor: AppColors.success,
+            ),
+          );
+
+          // Navigate to main page after successful registration
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (mounted) {
+              Navigator.of(context).pushReplacementNamed('/main');
+            }
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Kayıt başarısız: ${e.toString()}'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     } else if (!_acceptTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -60,6 +91,86 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: AppColors.error,
         ),
       );
+    }
+  }
+
+  Future<void> _handleGoogleRegister() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _authService.signInWithGoogle();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Google ile kayıt başarılı!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pushReplacementNamed('/main');
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Google kaydı başarısız: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _handleFacebookRegister() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _authService.signInWithFacebook();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Facebook ile kayıt başarılı!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pushReplacementNamed('/main');
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Facebook kaydı başarısız: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -162,8 +273,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         // Register Button - responsive
                         AppButton(
-                          text: 'Kaydol',
-                          onPressed: _handleRegister,
+                          text: _isLoading ? 'Kayıt yapılıyor...' : 'Kaydol',
+                          onPressed: _isLoading ? null : _handleRegister,
                           type: AppButtonType.primary,
                         ),
 
@@ -450,40 +561,28 @@ class _RegisterPageState extends State<RegisterPage> {
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Google.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Google kaydı yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading ? null : _handleGoogleRegister,
         ),
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Apple.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Apple kaydı yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading
+              ? null
+              : () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Apple kaydı yakında!'),
+                      backgroundColor: AppColors.info,
+                    ),
+                  );
+                },
         ),
         SizedBox(width: spacing),
         _buildSocialButton(
           context,
           iconPath: 'assets/icons/icon/Component/Components/Facebook.svg',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Facebook kaydı yakında!'),
-                backgroundColor: AppColors.info,
-              ),
-            );
-          },
+          onTap: _isLoading ? null : _handleFacebookRegister,
         ),
       ],
     );
@@ -517,7 +616,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildSocialButton(
     BuildContext context, {
     required String iconPath,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
   }) {
     final buttonSize = ResponsiveUtils.getResponsiveIconSize(context, 60);
     final iconSize = ResponsiveUtils.getResponsiveIconSize(context, 24);
@@ -529,7 +628,9 @@ class _RegisterPageState extends State<RegisterPage> {
         width: buttonSize,
         height: buttonSize,
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: onTap == null
+              ? AppColors.surface.withOpacity(0.5)
+              : AppColors.surface,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
             color: AppColors.border,
@@ -541,8 +642,10 @@ class _RegisterPageState extends State<RegisterPage> {
             iconPath,
             width: iconSize,
             height: iconSize,
-            colorFilter: const ColorFilter.mode(
-              AppColors.white,
+            colorFilter: ColorFilter.mode(
+              onTap == null
+                  ? AppColors.white.withOpacity(0.5)
+                  : AppColors.white,
               BlendMode.srcIn,
             ),
           ),

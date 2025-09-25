@@ -47,5 +47,38 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		
+		<!-- Facebook Configuration -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>facebook</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>fb805277675346793</string>
+				</array>
+			</dict>
+		</array>
+		
+		<key>FacebookAppID</key>
+		<string>805277675346793</string>
+		<key>FacebookClientToken</key>
+		<string>1c81a05eb173f614f171465b5c6041e5</string>
+		<key>FacebookDisplayName</key>
+		<string>Shartflix</string>
+		
+		<!-- Google Sign-In Configuration -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>google</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.278992425488-nejtvviack9q3jd6onv74oa4nufb5fr3</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>
