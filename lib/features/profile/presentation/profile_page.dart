@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/constants/app_paddings.dart';
+import '../../../../core/constants/app_radius.dart';
 import '../../../../core/models/movie_models.dart';
 import '../../../../core/services/api_client.dart';
 import '../../../../core/services/auth_service.dart';
@@ -126,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFFFFFFF).withOpacity(0.05),
+                              color: AppColors.white5Opacity,
                             ),
                             SizedBox(
                               height: ResponsiveUtils.getResponsiveSpacing(
@@ -172,15 +177,8 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Expanded(
                   child: Text(
-                    'Profil',
-                    style: TextStyle(
-                      fontFamily: 'Instrument Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize:
-                          ResponsiveUtils.getResponsiveFontSize(context, 24),
-                      height: 1.0,
-                      color: const Color(0xFFFFFFFF),
-                    ),
+                    AppStrings.profile,
+                    style: AppTextStyles.h4(context),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -197,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ResponsiveUtils.getResponsiveSpacing(context, 8),
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFF3B30),
+                      color: AppColors.appleRed,
                       borderRadius: BorderRadius.circular(
                         ResponsiveUtils.getResponsiveBorderRadius(context, 20),
                       ),
@@ -218,13 +216,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: ResponsiveUtils.getResponsiveSpacing(
                                 context, 4)),
                         Text(
-                          'Sınırlı Teklif',
-                          style: TextStyle(
-                            fontFamily: 'Instrument Sans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: ResponsiveUtils.getResponsiveFontSize(
-                                context, 12),
-                            color: Colors.white,
+                          AppStrings.limitedOffer,
+                          style:
+                              AppTextStyles.bodySmallSemibold(context).copyWith(
+                            color: AppColors.white,
                           ),
                         ),
                       ],
@@ -270,19 +265,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           ResponsiveUtils.getResponsiveSpacing(context, 10),
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFFFFF).withOpacity(0.05),
+                      color: AppColors.white5Opacity,
                       borderRadius: BorderRadius.circular(
                         ResponsiveUtils.getResponsiveBorderRadius(context, 8),
                       ),
                     ),
                     child: Text(
-                      'Fotoğraf Ekle',
-                      style: TextStyle(
-                        fontFamily: 'Instrument Sans',
-                        fontWeight: FontWeight.w500,
-                        fontSize:
-                            ResponsiveUtils.getResponsiveFontSize(context, 14),
-                        color: const Color(0xFFFFFFFF).withOpacity(0.8),
+                      AppStrings.addPhoto,
+                      style: AppTextStyles.bodyMediumMedium(context).copyWith(
+                        color: AppColors.white80,
                       ),
                     ),
                   ),
@@ -301,11 +292,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return Container(
       width: photoSize,
       height: photoSize,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(900.r),
+      decoration: const BoxDecoration(
+        borderRadius: AppRadius.allCircular,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(900.r),
+        borderRadius: AppRadius.allCircular,
         child: (_photoUrl != null && _photoUrl!.isNotEmpty)
             ? Image.network(
                 _photoUrl!,
@@ -313,7 +304,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 errorBuilder: (_, __, ___) => Container(
                   color: Colors.white10,
                   alignment: Alignment.center,
-                  child: const Icon(Icons.person, color: Colors.white),
+                  child: const Icon(Icons.person, color: AppColors.white),
                 ),
               )
             : Container(
@@ -340,25 +331,15 @@ class _ProfilePageState extends State<ProfilePage> {
           _userName,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontFamily: 'Instrument Sans',
-            fontWeight: FontWeight.w600,
-            fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
-            height: 1.0,
-            color: const Color(0xFFFFFFFF),
-          ),
+          style: AppTextStyles.bodyLargeSemibold(context),
         ),
         SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 2)),
         Text(
           _userIdLabel,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontFamily: 'Instrument Sans',
-            fontWeight: FontWeight.w500,
-            fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-            height: 1.0,
-            color: const Color(0xFFFFFFFF).withOpacity(0.6),
+          style: AppTextStyles.bodyMediumMedium(context).copyWith(
+            color: AppColors.white60,
           ),
         ),
       ],
@@ -380,14 +361,8 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Beğendiklerim',
-              style: TextStyle(
-                fontFamily: 'Instrument Sans',
-                fontWeight: FontWeight.w600,
-                fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
-                height: 1.0,
-                color: const Color(0xFFFFFFFF),
-              ),
+              AppStrings.likedMovies,
+              style: AppTextStyles.bodyXLargeSemibold(context),
             ),
             SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 24)),
             if (_loadingFavs)
@@ -395,12 +370,12 @@ class _ProfilePageState extends State<ProfilePage> {
             else if (_errorFavs != null)
               Column(
                 children: [
-                  Text('Favoriler yüklenemedi: $_errorFavs',
-                      style: TextStyle(color: Colors.red.shade300)),
-                  const SizedBox(height: 8),
+                  Text('${AppStrings.favoritesLoadError}: $_errorFavs',
+                      style: AppTextStyles.error(context)),
+                  const SizedBox(height: AppPaddings.sm),
                   ElevatedButton(
                     onPressed: _loadFavorites,
-                    child: const Text('Tekrar Dene'),
+                    child: const Text(AppStrings.retryAgain),
                   ),
                 ],
               )
@@ -497,7 +472,7 @@ class _MovieThumb extends StatelessWidget {
         AspectRatio(
           aspectRatio: 169 / 196,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadius.all12,
             child: Image.network(
               movie.imageUrl,
               fit: BoxFit.cover,
@@ -509,26 +484,23 @@ class _MovieThumb extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppPaddings.sm),
         Text(
           movie.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
+          style: AppTextStyles.bodySmallSemibold(context).copyWith(
+            color: AppColors.white,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: AppPaddings.xs / 2),
         if (company.isNotEmpty)
           Text(
             company,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
+            style: AppTextStyles.bodySmall(context).copyWith(
+              color: AppColors.white70,
             ),
           ),
       ],

@@ -7,6 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/constants/app_radius.dart';
 import '../../../../core/services/api_client.dart';
 import '../../../../core/services/auth_service.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -40,7 +44,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
       if (token == null) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Oturum bulunamadı')),
+          const SnackBar(content: Text(AppStrings.sessionNotFound)),
         );
         return;
       }
@@ -93,8 +97,9 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text(ok ? 'Fotoğraf yüklendi ✅' : 'Beklenmeyen yanıt: $status'),
+          content: Text(ok
+              ? AppStrings.photoUploaded
+              : '${AppStrings.unexpectedResponse}: $status'),
         ),
       );
 
@@ -106,12 +111,14 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
       if (!mounted) return;
       final serverText = e.response?.data?.toString() ?? '';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Yükleme başarısız: ${e.message}\n$serverText')),
+        SnackBar(
+            content:
+                Text('${AppStrings.uploadFailed}: ${e.message}\n$serverText')),
       );
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Yükleme başarısız: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${AppStrings.uploadFailed}: $e')));
     } finally {
       if (mounted) setState(() => _uploading = false);
     }
@@ -178,13 +185,9 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                                   context, 16),
                             ),
                             Text(
-                              'Fotoğraf Yükle',
-                              style: TextStyle(
-                                fontFamily: 'Instrument Sans',
-                                fontWeight: FontWeight.w700,
-                                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                                    context, 22),
-                                color: Colors.white,
+                              AppStrings.uploadPhoto,
+                              style: AppTextStyles.h5(context).copyWith(
+                                color: AppColors.white,
                               ),
                             ),
                             SizedBox(
@@ -192,15 +195,10 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                                   context, 8),
                             ),
                             Text(
-                              'Profil fotoğrafın için görsel yükleyebilirsin',
+                              AppStrings.uploadPhotoForProfile,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Instrument Sans',
-                                fontWeight: FontWeight.w400,
-                                fontSize: ResponsiveUtils.getResponsiveFontSize(
-                                    context, 14),
-                                height: 1.0,
-                                color: Colors.white.withOpacity(0.9),
+                              style: AppTextStyles.bodyMedium(context).copyWith(
+                                color: AppColors.white90,
                               ),
                             ),
                             SizedBox(height: 52.h),
@@ -245,7 +243,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
         children: [
           InkWell(
             onTap: () => Navigator.of(context).pop(),
-            borderRadius: BorderRadius.circular(24.r),
+            borderRadius: AppRadius.all24,
             child: SizedBox(
               width: 36.w,
               height: 36.w,
@@ -258,12 +256,9 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
           ),
           const Spacer(),
           Text(
-            'Profil Detayı',
-            style: TextStyle(
-              fontFamily: 'Instrument Sans',
-              fontWeight: FontWeight.w600,
-              fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
-              color: Colors.white,
+            AppStrings.profileDetail,
+            style: AppTextStyles.bodyLargeSemibold(context).copyWith(
+              color: AppColors.white,
             ),
           ),
           const Spacer(),
@@ -288,7 +283,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                   fit: BoxFit.contain,
                 )
               : ClipRRect(
-                  borderRadius: BorderRadius.circular(32.r),
+                  borderRadius: AppRadius.all32,
                   child: Image.file(
                     _selectedImageFile!,
                     fit: BoxFit.cover,
@@ -325,22 +320,24 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                   child: ElevatedButton(
                     onPressed: isEnabled ? _upload : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF3B30),
+                      backgroundColor: AppColors.appleRed,
                       disabledBackgroundColor:
-                          const Color(0xFFFF3B30).withOpacity(0.6),
+                          AppColors.appleRed.withOpacity(0.6),
                       minimumSize: Size.fromHeight(56.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.all12,
                       ),
                     ),
-                    child: Text(_uploading ? 'Yükleniyor...' : 'Devam Et'),
+                    child: Text(_uploading
+                        ? AppStrings.uploading
+                        : AppStrings.continueText),
                   ),
                 ),
                 SizedBox(height: gap),
                 TextButton(
                   onPressed:
                       _uploading ? null : () => Navigator.of(context).pop(),
-                  child: const Text('Atla'),
+                  child: const Text(AppStrings.skip),
                 ),
               ],
             ),

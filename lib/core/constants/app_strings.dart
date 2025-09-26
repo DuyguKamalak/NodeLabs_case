@@ -107,4 +107,42 @@ class AppStrings {
   static const String mostPopular = 'En Popüler';
   static const String selectPlan = 'Planı Seç';
   static const String currentPlan = 'Mevcut Plan';
+
+  // Additional strings found in code
+  static const String profileDetail = 'Profil Detayı';
+  static const String addPhoto = 'Fotoğraf Ekle';
+  static const String retryAgain = 'Tekrar Dene';
+  static const String favoritesLoadError = 'Favoriler yüklenemedi';
+  static const String continueText = 'Devam Et';
+  static const String skip = 'Atla';
+  static const String uploading = 'Yükleniyor...';
+  static const String uploadPhotoForProfile =
+      'Profil fotoğrafın için görsel yükleyebilirsin';
+  static const String sessionNotFound = 'Oturum bulunamadı';
+  static const String photoUploaded = 'Fotoğraf yüklendi ✅';
+  static const String unexpectedResponse = 'Beklenmeyen yanıt';
+  static const String uploadFailed = 'Yükleme başarısız';
+  static const String loginSuccessful = 'Giriş başarılı!';
+  static const String registrationSuccessful = 'Kayıt başarılı!';
+  static const String registrationFailed = 'Kayıt başarısız';
+  static const String acceptUserAgreement =
+      'Lütfen kullanıcı sözleşmesini kabul edin';
+  static const String googleRegistrationSuccessful =
+      'Google ile kayıt başarılı!';
+  static const String googleRegistrationFailed = 'Google kaydı başarısız';
+  static const String facebookRegistrationSuccessful =
+      'Facebook ile kayıt başarılı!';
+  static const String facebookRegistrationFailed = 'Facebook kaydı başarısız';
+
+  // Limited Offer Bottom Sheet
+  static const String limitedOfferDescription =
+      'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!';
+  static const String unlockWithTokenPackage =
+      'Kilidi açmak için bir jeton paketi seçin';
+  static const String viewAllTokens = 'Tüm Jetonları Gör';
+  static const String bonusesYouWillGet = 'Alacağınız Bonuslar';
+  static const String premiumAccount = 'Premium Hesap';
+  static const String moreMatches = 'Daha Fazla Eşleşme';
+  static const String highlight = 'Öne Çıkarma';
+  static const String moreLikes = 'Daha Fazla Beğeni';
 }

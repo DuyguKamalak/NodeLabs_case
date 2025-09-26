@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_strings.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/constants/app_paddings.dart';
 import '../../../../core/models/movie_models.dart';
 import '../../../../core/services/movie_service.dart';
 import '../../../../core/utils/responsive_utils.dart';
@@ -108,7 +111,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Favori güncellenemedi: $e'),
+          content: Text('${AppStrings.uploadFailed}: $e'),
           backgroundColor: AppColors.error,
         ),
       );
@@ -286,18 +289,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Filmler yüklenemedi: $_error',
-              style: const TextStyle(color: Colors.redAccent)),
-          const SizedBox(height: 8),
+          Text('${AppStrings.uploadFailed}: $_error',
+              style: AppTextStyles.error(context)),
+          const SizedBox(height: AppPaddings.sm),
           ElevatedButton(
-              onPressed: _loadMovies, child: const Text('Tekrar Dene')),
+              onPressed: _loadMovies, child: const Text(AppStrings.retryAgain)),
         ],
       );
     }
     final movie = _currentMovie;
     if (movie == null) {
-      return const Text('Henüz film bulunmuyor',
-          style: TextStyle(color: Colors.white70));
+      return Text(AppStrings.loading,
+          style: AppTextStyles.bodyMedium(context)
+              .copyWith(color: AppColors.white70));
     }
 
     return Row(
@@ -308,7 +312,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           width: 40,
           height: 40,
           decoration: const BoxDecoration(
-            color: Color(0xFFFF3B30),
+            color: AppColors.appleRed,
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
@@ -336,7 +340,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: AppPaddings.xs),
 
               // Açıklama: kapalıyken iki satır + SONDA link
               LayoutBuilder(

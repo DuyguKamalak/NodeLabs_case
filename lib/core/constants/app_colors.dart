@@ -161,4 +161,20 @@ class AppColors {
 
   /// Focus color (same as primary)
   static const Color focus = primary;
+
+  // ADDITIONAL COLORS FOUND IN CODE
+  /// Apple red color for buttons
+  static const Color appleRed = Color(0xFFFF3B30); // #FF3B30
+  /// Bright red for gradients
+  static const Color brightRed = Color(0xFFFF1B1B); // #FF1B1B
+  /// Dark red for gradients
+  static const Color darkRed = Color(0xFF8D0000); // #8D0000
+  /// White with 5% opacity
+  static const Color white5Opacity = Color(0x0DFFFFFF); // 5% #FFFFFF
+  /// White with 6% opacity
+  static const Color white6Opacity = Color(0x0FFFFFFF); // 6% #FFFFFF
+  /// White with 8% opacity
+  static const Color white8Opacity = Color(0x14FFFFFF); // 8% #FFFFFF
+  /// White with 7% opacity
+  static const Color white7Opacity = Color(0x12FFFFFF); // 7% #FFFFFF
 }

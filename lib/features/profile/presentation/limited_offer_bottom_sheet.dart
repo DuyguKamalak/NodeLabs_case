@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/constants/app_paddings.dart';
+import '../../../core/constants/app_radius.dart';
 import '../../../core/utils/responsive_utils.dart';
 
 class LimitedOfferBottomSheet extends StatefulWidget {
@@ -125,7 +128,7 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Sınırlı Teklif',
+                          AppStrings.limitedOffer,
                           style: AppTextStyles.h4(context),
                           textAlign: TextAlign.center,
                         ),
@@ -134,7 +137,7 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                               ResponsiveUtils.getResponsiveSpacing(context, 8),
                         ),
                         Text(
-                          'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!',
+                          AppStrings.limitedOfferDescription,
                           style: AppTextStyles.bodyMedium(context)
                               .copyWith(color: AppColors.white90),
                           textAlign: TextAlign.center,
@@ -149,7 +152,7 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                               ResponsiveUtils.getResponsiveSpacing(context, 16),
                         ),
                         Text(
-                          'Kilidi açmak için bir jeton paketi seçin',
+                          AppStrings.unlockWithTokenPackage,
                           style: AppTextStyles.bodyLargeSemibold(context),
                           textAlign: TextAlign.center,
                         ),
@@ -181,12 +184,12 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.all12,
                       ),
                     ),
                     child: Text(
-                      'Tüm Jetonları Gör',
+                      AppStrings.viewAllTokens,
                       style: AppTextStyles.buttonLarge(context),
                     ),
                   ),
@@ -244,17 +247,17 @@ class _BonusesPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EdgeInsets padding = EdgeInsets.all(16.w);
+    final EdgeInsets padding = EdgeInsets.all(AppPaddings.md.w);
     return Container(
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: AppRadius.all16,
         border: Border.all(color: AppColors.white20, width: 1),
         gradient: const RadialGradient(
           center: Alignment(0.1, 0),
           radius: 1.2,
-          colors: [Color(0x1AFFFFFF), Color(0x08FFFFFF)],
+          colors: [AppColors.white10, AppColors.white5],
           stops: [0.0, 1.0],
         ),
       ),
@@ -262,7 +265,7 @@ class _BonusesPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Alacağınız Bonuslar',
+            AppStrings.bonusesYouWillGet,
             style: AppTextStyles.bodyLargeSemibold(context)
                 .copyWith(color: AppColors.white),
             textAlign: TextAlign.center,
@@ -279,22 +282,22 @@ class _BonusesPanel extends StatelessWidget {
                 children: [
                   _BonusBadge(
                     size: badgeSize,
-                    label: 'Premium Hesap',
+                    label: AppStrings.premiumAccount,
                     asset: 'assets/images/iconlyPro.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
-                    label: 'Daha Fazla Eşleşme',
+                    label: AppStrings.moreMatches,
                     asset: 'assets/images/iconlyMatch.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
-                    label: 'Öne Çıkarma',
+                    label: AppStrings.highlight,
                     asset: 'assets/images/iconlyHighlight.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
-                    label: 'Daha Fazla Beğeni',
+                    label: AppStrings.moreLikes,
                     asset: 'assets/images/iconlyLikes.png',
                   ),
                 ],
@@ -358,7 +361,7 @@ class _BonusBadge extends StatelessWidget {
                         colors: [
                           Colors.transparent,
                           Colors.transparent,
-                          Color(0x66FFFFFF), // beyaz glow
+                          AppColors.white60, // beyaz glow
                           Colors.transparent,
                         ],
                         stops: [0.0, ringStart, 0.92, 1.0],

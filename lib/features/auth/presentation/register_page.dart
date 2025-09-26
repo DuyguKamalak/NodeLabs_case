@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/constants/app_radius.dart';
 import '../../../core/utils/responsive_utils.dart';
 import '../../../core/widgets/buttons/app_button.dart';
 import '../../../core/widgets/text_form_field/app_text_form_field.dart';
@@ -57,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Kayıt başarılı!'),
+              content: Text(AppStrings.registrationSuccessful),
               backgroundColor: AppColors.success,
             ),
           );
@@ -88,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (!_acceptTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Lütfen kullanıcı sözleşmesini kabul edin'),
+          content: Text(AppStrings.acceptUserAgreement),
           backgroundColor: AppColors.error,
         ),
       );
@@ -106,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Google ile kayıt başarılı!'),
+            content: Text(AppStrings.googleRegistrationSuccessful),
             backgroundColor: AppColors.success,
           ),
         );
@@ -146,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Facebook ile kayıt başarılı!'),
+            content: Text(AppStrings.facebookRegistrationSuccessful),
             backgroundColor: AppColors.success,
           ),
         );
@@ -527,7 +529,7 @@ class _RegisterPageState extends State<RegisterPage> {
             width: 20.w,
             height: 20.w,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.r),
+              borderRadius: AppRadius.all4,
               border: Border.all(
                 color: _acceptTerms ? AppColors.primary : AppColors.border,
                 width: 1.5,

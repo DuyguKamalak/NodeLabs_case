@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/constants/app_paddings.dart';
 
 class SplashPage extends StatelessWidget {
   static const String routePath = '/';
@@ -46,16 +47,16 @@ class SplashPage extends StatelessWidget {
                           center: Alignment.center,
                           radius: 0.9,
                           colors: [
-                            const Color(0xFFFF1B1B).withOpacity(0.8),
-                            const Color(0xFFFF1B1B).withOpacity(0.4),
-                            const Color(0xFF8D0000).withOpacity(0.0),
+                            AppColors.brightRed.withOpacity(0.8),
+                            AppColors.brightRed.withOpacity(0.4),
+                            AppColors.darkRed.withOpacity(0.0),
                           ],
                           stops: const [0.0, 0.25, 1.0],
                           tileMode: TileMode.clamp,
                         ),
                       ),
-                      foregroundDecoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
+                      foregroundDecoration: const BoxDecoration(
+                        color: AppColors.white5Opacity,
                         backgroundBlendMode: BlendMode.softLight,
                       ),
                     ),
@@ -75,7 +76,7 @@ class SplashPage extends StatelessWidget {
                   width: 78.w,
                   height: 78.w,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: AppPaddings.md.h),
                 Text(
                   AppStrings.appName,
                   textAlign: TextAlign.center,

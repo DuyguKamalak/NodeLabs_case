@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/utils/responsive_utils.dart';
 import '../../../core/widgets/buttons/app_button.dart';
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Giriş başarılı!'),
+              content: Text(AppStrings.loginSuccessful),
               backgroundColor: AppColors.success,
             ),
           );
