@@ -266,7 +266,7 @@ class _BonusesPanel extends StatelessWidget {
         children: [
           Text(
             AppStrings.bonusesYouWillGet,
-            style: AppTextStyles.bodyLargeSemibold(context)
+            style: AppTextStyles.bodyLargeMedium(context)
                 .copyWith(color: AppColors.white),
             textAlign: TextAlign.center,
           ),
@@ -381,7 +381,7 @@ class _BonusBadge extends StatelessWidget {
           SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 16)),
           Text(
             label,
-            style: AppTextStyles.bodyXSmallSemibold(context)
+            style: AppTextStyles.bodyXSmall(context)
                 .copyWith(color: AppColors.white),
             textAlign: TextAlign.center,
             maxLines: 2,

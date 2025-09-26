@@ -139,8 +139,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             _buildLikedSection(context),
                             SizedBox(
-                              height: ResponsiveUtils.getResponsiveSpacing(
-                                  context, 16),
+                              height:
+                                  ResponsiveUtils.getBottomNavHeight(context) +
+                                      MediaQuery.of(context).padding.bottom +
+                                      ResponsiveUtils.getResponsiveSpacing(
+                                          context, 24),
                             ),
                           ],
                         ),
@@ -272,7 +275,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Text(
                       AppStrings.addPhoto,
-                      style: AppTextStyles.bodyMediumMedium(context).copyWith(
+                      style: AppTextStyles.bodyMediumSemibold(context).copyWith(
                         color: AppColors.white80,
                       ),
                     ),
@@ -489,7 +492,7 @@ class _MovieThumb extends StatelessWidget {
           movie.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.bodySmallSemibold(context).copyWith(
+          style: AppTextStyles.bodyMediumSemibold(context).copyWith(
             color: AppColors.white,
           ),
         ),
@@ -499,7 +502,7 @@ class _MovieThumb extends StatelessWidget {
             company,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.bodySmall(context).copyWith(
+            style: AppTextStyles.bodyMedium(context).copyWith(
               color: AppColors.white70,
             ),
           ),

@@ -300,7 +300,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final movie = _currentMovie;
     if (movie == null) {
       return Text(AppStrings.loading,
-          style: AppTextStyles.bodyMedium(context)
+          style: AppTextStyles.bodyLargeBold(context)
               .copyWith(color: AppColors.white70));
     }
 
