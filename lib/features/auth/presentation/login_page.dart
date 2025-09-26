@@ -1,3 +1,4 @@
+import 'dart:ui'; // <-- Blur için eklendi
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -216,88 +217,117 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.transparent,
       body: AppBackground(
-        child: SafeArea(
-          child: ResponsiveUtils.responsiveBuilder(
-            builder: (context, deviceType) {
-              return ResponsiveUtils.constrainedContainer(
-                context: context,
-                child: SingleChildScrollView(
-                  padding: ResponsiveUtils.getPagePadding(context),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 40)),
-
-                        // Lottie Animation Header - responsive
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildAnimationHeader(context, deviceType),
-                        ),
-
-                        // Logo - responsive
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildLogo(context),
-                        ),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Title and subtitle - responsive
-                        _buildTitleSection(context),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 40)),
-
-                        // Form fields - responsive
-                        _buildFormFields(context, deviceType),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 32)),
-
-                        // Login Button - responsive
-                        SlideTransition(
-                          position: _slideAnimation,
-                          child: _buildLoginButton(context),
-                        ),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 32)),
-
-                        // Social Login Buttons - responsive
-                        SlideTransition(
-                          position: _slideAnimation,
-                          child: _buildSocialButtons(context, deviceType),
-                        ),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 32)),
-
-                        // Sign Up Link - responsive
-                        _buildSignUpLink(context),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 40)),
-                      ],
+        child: Stack(
+          children: [
+            // Üst blur
+            Positioned(
+              top: ResponsiveUtils.isMobile(context) ? 20 : -80,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Center(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(
+                      sigmaX: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                      sigmaY: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/Shine Effect.svg',
+                      width: size.width *
+                          (ResponsiveUtils.isMobile(context) ? 0.92 : 0.8),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+
+            SafeArea(
+              child: ResponsiveUtils.responsiveBuilder(
+                builder: (context, deviceType) {
+                  return ResponsiveUtils.constrainedContainer(
+                    context: context,
+                    child: SingleChildScrollView(
+                      padding: ResponsiveUtils.getPagePadding(context),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 40)),
+
+                            // Lottie Animation Header - responsive
+                            FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: _buildAnimationHeader(context, deviceType),
+                            ),
+
+                            // Logo - responsive
+                            FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: _buildLogo(context),
+                            ),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Title and subtitle - responsive
+                            _buildTitleSection(context),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 40)),
+
+                            // Form fields - responsive
+                            _buildFormFields(context, deviceType),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 32)),
+
+                            // Login Button - responsive
+                            SlideTransition(
+                              position: _slideAnimation,
+                              child: _buildLoginButton(context),
+                            ),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 32)),
+
+                            // Social Login Buttons - responsive
+                            SlideTransition(
+                              position: _slideAnimation,
+                              child: _buildSocialButtons(context, deviceType),
+                            ),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 32)),
+
+                            // Sign Up Link - responsive
+                            _buildSignUpLink(context),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 40)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

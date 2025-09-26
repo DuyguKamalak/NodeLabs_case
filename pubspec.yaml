@@ -74,6 +74,10 @@ flutter:
     - assets/images/anasayfa.jpg
     - assets/images/icon.svg
     - assets/images/Shine Effect.svg
+    - assets/images/iconlyPro.svg
+    - assets/images/iconlyMatch.svg
+    - assets/images/iconlyHighlight.svg
+    - assets/images/iconlyLikes.svg
     
     
 

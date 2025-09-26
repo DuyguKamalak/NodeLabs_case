@@ -55,6 +55,65 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
               ),
             ),
           ),
+
+          // --- Top Shine Effect  ---
+          Positioned(
+            top: ResponsiveUtils.isMobile(context) ? 20 : -80,
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: Center(
+                child: ImageFiltered(
+                  imageFilter: ui.ImageFilter.blur(
+                    sigmaX: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                    sigmaY: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/images/Shine Effect.svg',
+                    width: screen.width *
+                        (ResponsiveUtils.isMobile(context) ? 0.92 : 0.8),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // --- Bottom Shine Effect (primary #E50914, yuvarlak) ---
+          Positioned(
+            bottom: ResponsiveUtils.isMobile(context) ? -56 : -80,
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: Center(
+                child: SizedBox(
+                  width: 220, // verilen width
+                  height: 220, // verilen height
+                  child: ImageFiltered(
+                    imageFilter: ui.ImageFilter.blur(
+                      sigmaX: ResponsiveUtils.isMobile(context) ? 90.0 : 60.0,
+                      sigmaY: ResponsiveUtils.isMobile(context) ? 90.0 : 60.0,
+                    ),
+                    child: const DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle, // yuvarlak
+                        gradient: RadialGradient(
+                          center: Alignment.center,
+                          radius: 0.95,
+                          colors: <Color>[
+                            AppColors.primary, // merkez opak #E50914
+                            Colors.transparent, // dışa sönüş
+                          ],
+                          stops: <double>[0.0, 1.0],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
           Padding(
             padding: contentPadding,
             child: Column(
@@ -71,8 +130,9 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 8)),
+                          height:
+                              ResponsiveUtils.getResponsiveSpacing(context, 8),
+                        ),
                         Text(
                           'Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!',
                           style: AppTextStyles.bodyMedium(context)
@@ -80,20 +140,23 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 16)),
-                        _BonusesPanel(),
+                          height:
+                              ResponsiveUtils.getResponsiveSpacing(context, 16),
+                        ),
+                        const _BonusesPanel(),
                         SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 16)),
+                          height:
+                              ResponsiveUtils.getResponsiveSpacing(context, 16),
+                        ),
                         Text(
                           'Kilidi açmak için bir jeton paketi seçin',
                           style: AppTextStyles.bodyLargeSemibold(context),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 12)),
+                          height:
+                              ResponsiveUtils.getResponsiveSpacing(context, 12),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(
                             bottom: ResponsiveUtils.getResponsiveSpacing(
@@ -109,7 +172,8 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                   ),
                 ),
                 SizedBox(
-                    height: ResponsiveUtils.getResponsiveSpacing(context, 12)),
+                  height: ResponsiveUtils.getResponsiveSpacing(context, 12),
+                ),
                 SizedBox(
                   width: double.infinity,
                   height: 56.h,
@@ -118,7 +182,8 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r)),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
                     ),
                     child: Text(
                       'Tüm Jetonları Gör',
@@ -130,6 +195,7 @@ class _LimitedOfferBottomSheetState extends State<LimitedOfferBottomSheet> {
               ],
             ),
           ),
+
           Positioned(
             right: ResponsiveUtils.getResponsiveSpacing(context, 24),
             top: ResponsiveUtils.getResponsiveSpacing(context, 16),
@@ -172,7 +238,10 @@ class _BlurCircleButton extends StatelessWidget {
   }
 }
 
+// 'key' opsiyonel parametresi kaldırıldı (lint fix)
 class _BonusesPanel extends StatelessWidget {
+  const _BonusesPanel();
+
   @override
   Widget build(BuildContext context) {
     final EdgeInsets padding = EdgeInsets.all(16.w);
@@ -192,16 +261,18 @@ class _BonusesPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Alacağınız Bonuslar',
-              style: AppTextStyles.bodyLargeSemibold(context)
-                  .copyWith(color: AppColors.white),
-              textAlign: TextAlign.center),
+          Text(
+            'Alacağınız Bonuslar',
+            style: AppTextStyles.bodyLargeSemibold(context)
+                .copyWith(color: AppColors.white),
+            textAlign: TextAlign.center,
+          ),
           SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 12)),
           LayoutBuilder(
             builder: (context, constraints) {
-              final double gap = 8.w;
+              final double gap = 6.w;
               final double usable = constraints.maxWidth - gap * 3;
-              final double badgeSize = (usable / 4).clamp(44.0, 56.0);
+              final double badgeSize = (usable / 4).clamp(44.0, 60.0);
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,22 +280,22 @@ class _BonusesPanel extends StatelessWidget {
                   _BonusBadge(
                     size: badgeSize,
                     label: 'Premium Hesap',
-                    asset: 'assets/images/iconlyPro.svg',
+                    asset: 'assets/images/iconlyPro.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
                     label: 'Daha Fazla Eşleşme',
-                    asset: 'assets/images/iconlyMatch.svg',
+                    asset: 'assets/images/iconlyMatch.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
                     label: 'Öne Çıkarma',
-                    asset: 'assets/images/iconlyHighlight.svg',
+                    asset: 'assets/images/iconlyHighlight.png',
                   ),
                   _BonusBadge(
                     size: badgeSize,
                     label: 'Daha Fazla Beğeni',
-                    asset: 'assets/images/iconlyLikes.svg',
+                    asset: 'assets/images/iconlyLikes.png',
                   ),
                 ],
               );
@@ -297,12 +368,10 @@ class _BonusBadge extends StatelessWidget {
                 ),
               ),
 
-              // SVG ikonu
-              SvgPicture.asset(
-                asset,
-                width: size * 0.56,
-                height: size * 0.56,
-                fit: BoxFit.contain,
+              // --- İKON: SVG + PNG fallback (SVG boş çizilirse PNG görünür) ---
+              _BadgeIcon(
+                asset: asset,
+                size: size * 0.56,
               ),
             ],
           ),
@@ -317,6 +386,47 @@ class _BonusBadge extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _BadgeIcon extends StatelessWidget {
+  final String asset;
+  final double size;
+  const _BadgeIcon({required this.asset, required this.size});
+
+  String _pngPath(String p) =>
+      p.replaceAll(RegExp(r'\.svg$', caseSensitive: false), '.png');
+
+  @override
+  Widget build(BuildContext context) {
+    final png = _pngPath(asset);
+
+    // PNG'yi altta, SVG'yi üstte tutuyoruz.
+    // SVG boş/şeffaf çizilirse alttaki PNG görünür.
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // PNG fallback
+        Image.asset(
+          png,
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+        ),
+
+        // SVG
+        SvgPicture.asset(
+          asset,
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          allowDrawingOutsideViewBox: true,
+          placeholderBuilder: (_) => const SizedBox.shrink(),
+          errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+        ),
+      ],
     );
   }
 }

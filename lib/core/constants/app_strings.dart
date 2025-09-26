@@ -5,7 +5,6 @@ class AppStrings {
   // App General
   static const String appName = 'Shartflix';
   static const String appVersion = '1.0.0';
-  static const String appTagline = 'En İyi Filmler Burada';
 
   // Navigation
   static const String home = 'Ana Sayfa';
@@ -108,14 +107,4 @@ class AppStrings {
   static const String mostPopular = 'En Popüler';
   static const String selectPlan = 'Planı Seç';
   static const String currentPlan = 'Mevcut Plan';
-
-  // Theme
-  static const String darkMode = 'Karanlık Mod';
-  static const String lightMode = 'Aydınlık Mod';
-  static const String systemMode = 'Sistem Teması';
-
-  // Localization
-  static const String turkish = 'Türkçe';
-  static const String english = 'English';
-  static const String language = 'Dil';
 }

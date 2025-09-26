@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // 🎨 BRAND COLORS
+  //  BRAND COLORS
   /// Primary brand color
   static const Color primary = Color(0xFFE50914); // #E50914
   /// Primary dark brand color
@@ -13,7 +13,7 @@ class AppColors {
   /// Secondary brand color
   static const Color secondary = Color(0xFF5949E6); // #5949E6
 
-  // 🤍 WHITE TONES (Opacity variations)
+  // WHITE TONES (Opacity variations)
   /// White with 90% opacity
   static const Color white90 = Color(0xE6FFFFFF); // 90% #FFFFFF
   /// White with 80% opacity
@@ -35,7 +35,7 @@ class AppColors {
   /// White with 5% opacity
   static const Color white5 = Color(0x0DFFFFFF); // 5% #FFFFFF
 
-  // 🚨 ALERT & STATUS COLORS
+  //  ALERT & STATUS COLORS
   /// Success color for positive actions
   static const Color success = Color(0xFF00C247); // #00C247
   /// Info color for informational messages
@@ -45,13 +45,13 @@ class AppColors {
   /// Error color for error messages
   static const Color error = Color(0xFFF47171); // #F47171
 
-  // 🔘 OTHERS
+  //  OTHERS
   /// Pure white
   static const Color white = Color(0xFFFFFFFF); // #FFFFFF
   /// Pure black
   static const Color black = Color(0xFF000000); // #000000
 
-  // 📱 COMMON UI COLORS (derived from design system)
+  // COMMON UI COLORS (derived from design system)
   /// Main background color (from gradient base)
   static const Color background = Color(0xFF090909); // #090909
   /// Dark background color
@@ -68,17 +68,17 @@ class AppColors {
   /// Grey color
   static const Color grey = Color(0xFF9E9E9E);
 
-  // 🔘 BUTTON COLORS
+  //  BUTTON COLORS
   /// Disabled button color
   static const Color buttonDisabled = Color(0xFF4D4D4D);
 
-  // 🌅 SPLASH COLORS
+  //  SPLASH COLORS
   /// Splash bottom color
   static const Color splashBottom = Color(0xFF090909); // #090909
   /// Splash top color
   static const Color splashTop = Color(0xFF3F0306); // #3F0306
 
-  // 📝 TEXT COLORS (using white tones)
+  // TEXT COLORS (using white tones)
   /// Primary text color
   static const Color textPrimary = white; // #FFFFFF
   /// Secondary text color
@@ -88,7 +88,7 @@ class AppColors {
   /// Disabled text color
   static const Color textDisabled = white30; // 30% white
 
-  // 🔴 GRADIENTS
+  // GRADIENTS
 
   /// Background gradient: linear-gradient(0deg, #090909 40%, #3F0306 100%)
   static const LinearGradient backgroundGradient = LinearGradient(
@@ -134,7 +134,7 @@ class AppColors {
     stops: [0.0, 1.0],
   );
 
-  // 🔗 LEGACY ALIASES (for backward compatibility)
+  //  LEGACY ALIASES (for backward compatibility)
   /// App background gradient (same as backgroundGradient)
   static const LinearGradient appBackgroundGradient = backgroundGradient;
 
@@ -152,7 +152,7 @@ class AppColors {
     ],
   );
 
-  // 🎯 UTILITY COLORS
+  //  UTILITY COLORS
   /// Transparent color
   static const Color transparent = Colors.transparent;
 

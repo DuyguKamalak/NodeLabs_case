@@ -88,15 +88,15 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               // Üst blur: Responsive shine effect
               Positioned(
-                top: ResponsiveUtils.isMobile(context) ? -56 : -80,
+                top: ResponsiveUtils.isMobile(context) ? 20 : -80,
                 left: 0,
                 right: 0,
                 child: IgnorePointer(
                   child: Center(
                     child: ImageFiltered(
                       imageFilter: ImageFilter.blur(
-                        sigmaX: ResponsiveUtils.isMobile(context) ? 50.6 : 60.0,
-                        sigmaY: ResponsiveUtils.isMobile(context) ? 50.6 : 60.0,
+                        sigmaX: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                        sigmaY: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
                       ),
                       child: SvgPicture.asset(
                         'assets/images/Shine Effect.svg',

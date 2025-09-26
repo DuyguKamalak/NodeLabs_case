@@ -1,3 +1,4 @@
+import 'dart:ui'; // <-- Blur için eklendi
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -182,126 +183,159 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Shine Effect genişliği için ekran boyutu
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.transparent,
       body: AppBackground(
-        child: SafeArea(
-          child: ResponsiveUtils.responsiveBuilder(
-            builder: (context, deviceType) {
-              return ResponsiveUtils.constrainedContainer(
-                context: context,
-                child: SingleChildScrollView(
-                  padding: ResponsiveUtils.getPagePadding(context),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 20)),
-
-                        // Logo ve Text Container - responsive
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Logo - responsive
-                              SvgPicture.asset(
-                                'assets/images/icon.svg',
-                                width: ResponsiveUtils.isMobile(context)
-                                    ? 78.w
-                                    : 88.w,
-                                height: ResponsiveUtils.isMobile(context)
-                                    ? 78.h
-                                    : 88.h,
-                              ),
-
-                              SizedBox(
-                                  height: ResponsiveUtils.getResponsiveSpacing(
-                                      context, 24)),
-
-                              // "Hesap Oluştur" Text - responsive
-                              Text(
-                                'Hesap Oluştur',
-                                style: AppTextStyles.h4(context).copyWith(
-                                  color: AppColors.white,
-                                  fontSize:
-                                      ResponsiveUtils.getResponsiveFontSize(
-                                          context, 24),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-
-                              SizedBox(
-                                  height: ResponsiveUtils.getResponsiveSpacing(
-                                      context, 8)),
-
-                              // "Kullanıcı bilgilerinle kaydol" Text - responsive
-                              Text(
-                                'Kullanıcı bilgilerinle kaydol',
-                                style:
-                                    AppTextStyles.bodyMedium(context).copyWith(
-                                  color: AppColors.white90,
-                                  fontSize:
-                                      ResponsiveUtils.getResponsiveFontSize(
-                                          context, 14),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Form Fields - responsive
-                        _buildFormFields(context, deviceType),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Terms and Conditions Checkbox - responsive
-                        _buildTermsCheckbox(context),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Register Button - responsive
-                        AppButton(
-                          text: _isLoading ? 'Kayıt yapılıyor...' : 'Kaydol',
-                          onPressed: _isLoading ? null : _handleRegister,
-                          type: AppButtonType.primary,
-                        ),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Social Login Buttons - responsive
-                        _buildSocialButtons(context, deviceType),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 24)),
-
-                        // Login Link - responsive
-                        _buildLoginLink(context),
-
-                        SizedBox(
-                            height: ResponsiveUtils.getResponsiveSpacing(
-                                context, 40)),
-                      ],
+        child: Stack(
+          children: [
+            // Üst blur
+            Positioned(
+              top: ResponsiveUtils.isMobile(context) ? 20 : -80,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Center(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(
+                      sigmaX: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                      sigmaY: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/Shine Effect.svg',
+                      width: size.width *
+                          (ResponsiveUtils.isMobile(context) ? 0.92 : 0.8),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+
+            SafeArea(
+              child: ResponsiveUtils.responsiveBuilder(
+                builder: (context, deviceType) {
+                  return ResponsiveUtils.constrainedContainer(
+                    context: context,
+                    child: SingleChildScrollView(
+                      padding: ResponsiveUtils.getPagePadding(context),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 20)),
+
+                            // Logo ve Text Container - responsive
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Logo - responsive
+                                  SvgPicture.asset(
+                                    'assets/images/icon.svg',
+                                    width: ResponsiveUtils.isMobile(context)
+                                        ? 78.w
+                                        : 88.w,
+                                    height: ResponsiveUtils.isMobile(context)
+                                        ? 78.h
+                                        : 88.h,
+                                  ),
+
+                                  SizedBox(
+                                      height:
+                                          ResponsiveUtils.getResponsiveSpacing(
+                                              context, 24)),
+
+                                  // "Hesap Oluştur" Text - responsive
+                                  Text(
+                                    'Hesap Oluştur',
+                                    style: AppTextStyles.h4(context).copyWith(
+                                      color: AppColors.white,
+                                      fontSize:
+                                          ResponsiveUtils.getResponsiveFontSize(
+                                              context, 24),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+
+                                  SizedBox(
+                                      height:
+                                          ResponsiveUtils.getResponsiveSpacing(
+                                              context, 8)),
+
+                                  // "Kullanıcı bilgilerinle kaydol" Text - responsive
+                                  Text(
+                                    'Kullanıcı bilgilerinle kaydol',
+                                    style: AppTextStyles.bodyMedium(context)
+                                        .copyWith(
+                                      color: AppColors.white90,
+                                      fontSize:
+                                          ResponsiveUtils.getResponsiveFontSize(
+                                              context, 14),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Form Fields - responsive
+                            _buildFormFields(context, deviceType),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Terms and Conditions Checkbox - responsive
+                            _buildTermsCheckbox(context),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Register Button - responsive
+                            AppButton(
+                              text:
+                                  _isLoading ? 'Kayıt yapılıyor...' : 'Kaydol',
+                              onPressed: _isLoading ? null : _handleRegister,
+                              type: AppButtonType.primary,
+                            ),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Social Login Buttons - responsive
+                            _buildSocialButtons(context, deviceType),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 24)),
+
+                            // Login Link - responsive
+                            _buildLoginLink(context),
+
+                            SizedBox(
+                                height: ResponsiveUtils.getResponsiveSpacing(
+                                    context, 40)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

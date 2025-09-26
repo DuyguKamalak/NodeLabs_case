@@ -1,3 +1,4 @@
+import 'dart:ui'; // <-- Blur için eklendi
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -119,85 +120,114 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
   @override
   Widget build(BuildContext context) {
     final bool isEnabled = _selectedImageFile != null && !_uploading;
+    final size = MediaQuery.of(context).size; // Shine genişliği için
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AppBackground(
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(context),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: ResponsiveUtils.getPagePadding(context),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height:
-                              ResponsiveUtils.getResponsiveSpacing(context, 24),
-                        ),
-                        SvgPicture.asset(
-                          'assets/images/Profile_Pic.svg',
-                          width: ResponsiveUtils.getResponsiveIconSize(
-                              context, 64),
-                          height: ResponsiveUtils.getResponsiveIconSize(
-                              context, 64),
-                        ),
-                        SizedBox(
-                          height:
-                              ResponsiveUtils.getResponsiveSpacing(context, 16),
-                        ),
-                        Text(
-                          'Fotoğraf Yükle',
-                          style: TextStyle(
-                            fontFamily: 'Instrument Sans',
-                            fontWeight: FontWeight.w700,
-                            fontSize: ResponsiveUtils.getResponsiveFontSize(
-                                context, 22),
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          height:
-                              ResponsiveUtils.getResponsiveSpacing(context, 8),
-                        ),
-                        Text(
-                          'Profil fotoğrafın için görsel yükleyebilirsin',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Instrument Sans',
-                            fontWeight: FontWeight.w400,
-                            fontSize: ResponsiveUtils.getResponsiveFontSize(
-                                context, 14),
-                            height: 1.0,
-                            color: Colors.white.withOpacity(0.9),
-                          ),
-                        ),
-                        SizedBox(height: 52.h),
-                        SizedBox(
-                          width: 196.w,
-                          height: 395.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              _buildDropZone(context),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height:
-                              ResponsiveUtils.getResponsiveSpacing(context, 36),
-                        ),
-                      ],
+        child: Stack(
+          children: [
+            // Üst blur
+            Positioned(
+              top: ResponsiveUtils.isMobile(context) ? 20 : -80,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Center(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(
+                      sigmaX: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                      sigmaY: ResponsiveUtils.isMobile(context) ? 40.6 : 60.0,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/images/Shine Effect.svg',
+                      width: size.width *
+                          (ResponsiveUtils.isMobile(context) ? 0.92 : 0.8),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ),
-              _buildBottomActions(context, isEnabled),
-            ],
-          ),
+            ),
+
+            // Mevcut içerik: olduğu gibi
+            SafeArea(
+              child: Column(
+                children: [
+                  _buildHeader(context),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: ResponsiveUtils.getPagePadding(context),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: ResponsiveUtils.getResponsiveSpacing(
+                                  context, 24),
+                            ),
+                            SvgPicture.asset(
+                              'assets/images/Profile_Pic.svg',
+                              width: ResponsiveUtils.getResponsiveIconSize(
+                                  context, 64),
+                              height: ResponsiveUtils.getResponsiveIconSize(
+                                  context, 64),
+                            ),
+                            SizedBox(
+                              height: ResponsiveUtils.getResponsiveSpacing(
+                                  context, 16),
+                            ),
+                            Text(
+                              'Fotoğraf Yükle',
+                              style: TextStyle(
+                                fontFamily: 'Instrument Sans',
+                                fontWeight: FontWeight.w700,
+                                fontSize: ResponsiveUtils.getResponsiveFontSize(
+                                    context, 22),
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: ResponsiveUtils.getResponsiveSpacing(
+                                  context, 8),
+                            ),
+                            Text(
+                              'Profil fotoğrafın için görsel yükleyebilirsin',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Instrument Sans',
+                                fontWeight: FontWeight.w400,
+                                fontSize: ResponsiveUtils.getResponsiveFontSize(
+                                    context, 14),
+                                height: 1.0,
+                                color: Colors.white.withOpacity(0.9),
+                              ),
+                            ),
+                            SizedBox(height: 52.h),
+                            SizedBox(
+                              width: 196.w,
+                              height: 395.h,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  _buildDropZone(context),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: ResponsiveUtils.getResponsiveSpacing(
+                                  context, 36),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  _buildBottomActions(context, isEnabled),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
